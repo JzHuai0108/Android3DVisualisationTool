@@ -9,10 +9,15 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:text="Show Axes"/>-->
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"/>
+    <!--<TextView-->
+        <!--android:id="@+id/section_label"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceListItemSmall"/>-->
+    <!--<SurfaceView-->
+        <!--android:id="@+id/gl_surface_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
 
 </RelativeLayout>
