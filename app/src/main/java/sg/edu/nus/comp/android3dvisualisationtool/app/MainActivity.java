@@ -2,8 +2,12 @@ package sg.edu.nus.comp.android3dvisualisationtool.app;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.pm.ConfigurationInfo;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -26,9 +30,16 @@ public class MainActivity extends Activity
      */
     private CharSequence mTitle;
 
+    // opengles view
+    private GLSurfaceView mGLSurfaceView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        initialiseOpenGLESView();
+
+        // set content view as our opengles surface view
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -139,4 +150,37 @@ public class MainActivity extends Activity
         }
     }
 
+    // methods for opengles support
+    private boolean hasGLES20() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
+        return configurationInfo.reqGlEsVersion >= 0x20000;
+    }
+
+    private void initialiseOpenGLESView() {
+        if (hasGLES20()) {
+            mGLSurfaceView = new GLSurfaceView(this);
+            mGLSurfaceView.setEGLContextClientVersion(2);
+            mGLSurfaceView.setPreserveEGLContextOnPause(true);
+            mGLSurfaceView.setRenderer(new GLES20Renderer());
+            mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        } else {
+            System.out.println("This phone does not support OpenGLES 2.0, quiting...");
+            System.exit(1);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGLSurfaceView != null)
+            mGLSurfaceView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mGLSurfaceView != null)
+            mGLSurfaceView.onPause();
+    }
 }
