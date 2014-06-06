@@ -40,7 +40,7 @@ public class MainActivity extends Activity
         initialiseOpenGLESView();
 
         // set content view as our opengles surface view
-        setContentView(mGLSurfaceView);
+        setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -161,6 +161,7 @@ public class MainActivity extends Activity
             mGLSurfaceView.setEGLContextClientVersion(2);
             mGLSurfaceView.setPreserveEGLContextOnPause(true);
             mGLSurfaceView.setRenderer(new GLES20Renderer());
+            mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         } else {
             System.out.println("This phone does not support OpenGLES 2.0, quiting...");
             System.exit(1);
