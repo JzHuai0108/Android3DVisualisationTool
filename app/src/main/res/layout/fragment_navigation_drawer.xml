@@ -6,20 +6,20 @@
     android:background="#ffffff">
 
     <CheckBox
-        android:id="@+id/chkIos"
+        android:id="@+id/showAxes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show Axes"
         android:checked="true" />
 
     <CheckBox
-        android:id="@+id/chkAndroid"
+        android:id="@+id/showNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show Normal Vectors" />
 
     <CheckBox
-        android:id="@+id/chkWindows"
+        android:id="@+id/setOrigin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set Origin To Center" />
