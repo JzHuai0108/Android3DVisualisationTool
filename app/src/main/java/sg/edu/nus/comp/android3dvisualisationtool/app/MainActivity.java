@@ -3,8 +3,10 @@ package sg.edu.nus.comp.android3dvisualisationtool.app;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,13 +15,13 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, Dialog_Fragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
+    private Dialog_Fragment mDialog_fragment;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -42,6 +44,9 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        mDialog_fragment = (Dialog_Fragment)
+                getFragmentManager().findFragmentById(R.id.drawer_layout);
 
         initialiseOpenGLESView();
     }
@@ -97,11 +102,18 @@ public class MainActivity extends Activity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        try {
+            int id = item.getItemId();
+            if (id == R.id.action_dialog) {
+                FragmentManager fm = getFragmentManager();
+                mDialog_fragment = new Dialog_Fragment();
+                mDialog_fragment.show(fm, "fragment_dialog");
+            }
+            return super.onOptionsItemSelected(item);
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     // methods for opengles support
@@ -137,5 +149,12 @@ public class MainActivity extends Activity
         super.onPause();
         if (mGLSurfaceView != null)
             mGLSurfaceView.onPause();
+    }
+
+
+    // handle dialog event
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
