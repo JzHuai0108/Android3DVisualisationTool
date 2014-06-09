@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 /**
@@ -41,6 +42,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+
+    private CheckBox showAxesBox, showNormalBox, setOriginBox;
 
     public NavigationDrawerFragment() {
     }
@@ -74,6 +77,38 @@ public class NavigationDrawerFragment extends Fragment {
         View DrawerView = inflater.inflate(R.layout.fragment_navigation_drawer, container);
 
         return DrawerView;
+    }
+
+    private void addListenersToCheckboxes() {
+        showAxesBox = (CheckBox)getActivity().findViewById(R.id.showAxes);
+        showAxesBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()){
+                    Toast.makeText(getActivity(), "Show Axes Box checked", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        showNormalBox = (CheckBox)getActivity().findViewById(R.id.showNormal);
+        showNormalBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()){
+                    Toast.makeText(getActivity(), "Show Axes Box checked", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        setOriginBox = (CheckBox)getActivity().findViewById(R.id.setOrigin);
+        setOriginBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()){
+                    Toast.makeText(getActivity(), "Show Axes Box checked", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public boolean isDrawerOpen() {
@@ -152,6 +187,8 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        addListenersToCheckboxes();
     }
 
     @Override
@@ -178,10 +215,10 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
+//        if (item.getItemId() == R.id.action_example) {
+//            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
