@@ -24,9 +24,9 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.Dialog_Fragment">
         android:id="@+id/textView1" />
 
     <SeekBar
+        android:id="@+id/seekBar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar1"
         android:layout_gravity="center_horizontal" />
 
     <LinearLayout
@@ -103,9 +103,9 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.Dialog_Fragment">
         android:id="@+id/textView2" />
 
     <SeekBar
+        android:id="@+id/seekBar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar2"
         android:layout_gravity="center_horizontal" />
 
     <LinearLayout
@@ -177,14 +177,14 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.Dialog_Fragment">
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="Point Radius"
         android:textColor="@android:color/white"
         android:id="@+id/textView3" />
 
     <SeekBar
+        android:id="@+id/seekBar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/seekBar3"
         android:layout_gravity="center_horizontal" />
 
     <LinearLayout
@@ -261,9 +261,9 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.Dialog_Fragment">
         android:id="@+id/textView4" />
 
     <SeekBar
+        android:id="@+id/seekBar4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/seekBar4" />
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -315,14 +315,6 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.Dialog_Fragment">
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="1.0"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="4"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
