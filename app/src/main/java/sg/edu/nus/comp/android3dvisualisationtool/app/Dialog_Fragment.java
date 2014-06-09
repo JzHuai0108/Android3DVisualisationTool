@@ -47,6 +47,7 @@ public class Dialog_Fragment extends DialogFragment {
         return builder.show();
     }
 
+    //
     private static double convertToTick(int progress){
         double output;
 
@@ -158,12 +159,14 @@ public class Dialog_Fragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
     }
 
     @Override
