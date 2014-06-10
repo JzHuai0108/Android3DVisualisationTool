@@ -37,6 +37,9 @@ public abstract class GLRenderer implements GLSurfaceView.Renderer{
         mHeight = height;
 
         onCreate(mWidth, mHeight, isSurfaceCreated);
+        if (isSurfaceCreated)
+            onCreate(mWidth, mHeight, false);
+
         isSurfaceCreated = false;
     }
 
