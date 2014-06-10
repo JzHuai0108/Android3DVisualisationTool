@@ -1,10 +1,12 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app;
+package sg.edu.nus.comp.android3dvisualisationtool.app.Points;
 
 import android.opengl.GLES20;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
+
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 /**
  * Created by panlong on 6/6/14.

@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app;
+package sg.edu.nus.comp.android3dvisualisationtool.app.UI;
 
 
 import android.app.ActionBar;
@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import sg.edu.nus.comp.android3dvisualisationtool.app.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

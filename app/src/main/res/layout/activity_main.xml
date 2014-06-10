@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <sg.edu.nus.comp.android3dvisualisationtool.app.GLES20SurfaceView
+        <sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20SurfaceView
             android:id="@+id/gl_surface_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -24,14 +24,14 @@
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:name="sg.edu.nus.comp.android3dvisualisationtool.app.NavigationDrawerFragment"
+        android:name="sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />
 
     <fragment android:id="@+id/dialog"
         android:layout_width="@dimen/dialog_width"
         android:layout_height="@dimen/dialog_height"
         android:layout_gravity="center"
-        android:name="sg.edu.nus.comp.android3dvisualisationtool.app.Dialog_Fragment"
+        android:name="sg.edu.nus.comp.android3dvisualisationtool.app.UI.Dialog_Fragment"
         tools:layout="@layout/fragment_dialog" />
 
 </android.support.v4.widget.DrawerLayout>

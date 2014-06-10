@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app;
+package sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

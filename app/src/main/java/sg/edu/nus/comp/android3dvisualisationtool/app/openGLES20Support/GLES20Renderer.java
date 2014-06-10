@@ -1,8 +1,10 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app;
+package sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
+
+import sg.edu.nus.comp.android3dvisualisationtool.app.Points.Points;
 
 /**
  * Created by panlong on 6/6/14.
