@@ -272,8 +272,6 @@ public class GLES20Renderer extends GLRenderer
 
             // Tell OpenGL to use this program when rendering.
             GLES20.glUseProgram(programHandle);
-
-            onCreate(width, height, false);
         } else {
             // Set the OpenGL viewport to the same size as the surface.
             GLES20.glViewport(0, 0, width, height);
@@ -285,8 +283,8 @@ public class GLES20Renderer extends GLRenderer
             final float right = ratio;
             final float bottom = -1.0f;
             final float top = 1.0f;
-            final float near = 0.1f;
-            final float far = 10000.0f;
+            final float near = 1f;
+            final float far = 10.0f;
 
             Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
         }
