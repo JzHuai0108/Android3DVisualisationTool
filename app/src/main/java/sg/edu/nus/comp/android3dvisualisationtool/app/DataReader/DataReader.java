@@ -9,13 +9,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.edu.nus.comp.android3dvisualisationtool.app.Point;
+import sg.edu.nus.comp.android3dvisualisationtool.app.Points.Point;
 
 /**
  * Created by tang on 10/6/14.
  */
 public class DataReader extends Activity{
-    private List<sg.edu.nus.comp.android3dvisualisationtool.app.Point> points = null;
+    private List<Point> points = null;
 
     public DataReader(String filename) {
         openFile(new File(filename));
