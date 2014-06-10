@@ -1,15 +1,17 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app;
+package sg.edu.nus.comp.android3dvisualisationtool.app.Points;
+
+import android.opengl.GLES20;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import android.opengl.GLES20;
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 /**
- * A two-dimensional triangle for use as a drawn object in OpenGL ES 2.0.
+ * Created by panlong on 6/6/14.
  */
-public class Triangle {
+public class Points {
 
     private final String vertexShaderCode =
             // This matrix member variable provides a hook to manipulate
@@ -21,6 +23,7 @@ public class Triangle {
                     // Note that the uMVPMatrix factor *must be first* in order
                     // for the matrix multiplication product to be correct.
                     "  gl_Position = uMVPMatrix * vPosition;" +
+                    "  gl_PointSize = 20.0;" +
                     "}";
 
     private final String fragmentShaderCode =
@@ -52,7 +55,7 @@ public class Triangle {
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
-    public Triangle() {
+    public Points() {
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (number of coordinate values * 4 bytes per float)
@@ -117,7 +120,7 @@ public class Triangle {
         GLES20Renderer.checkGlError("glUniformMatrix4fv");
 
         // Draw the triangle
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+        GLES20.glDrawArrays(GLES20.GL_POINTS, 0, vertexCount);
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
