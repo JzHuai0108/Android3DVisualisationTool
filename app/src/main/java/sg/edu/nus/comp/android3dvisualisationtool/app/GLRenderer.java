@@ -43,9 +43,7 @@ public abstract class GLRenderer implements GLSurfaceView.Renderer{
     @Override
     public void onDrawFrame(GL10 notUsed) {
         onDrawFrame(isFirstDraw);
-
-        if (isFirstDraw)
-            isFirstDraw = false;
+        isFirstDraw = false;
     }
 
     public abstract void onCreate(int width, int height, boolean isContextLost);

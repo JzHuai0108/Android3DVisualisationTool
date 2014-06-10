@@ -128,9 +128,9 @@ public class MainActivity extends Activity
 //            mGLSurfaceView = new GLSurfaceView(this);
             mGLSurfaceView = (GLES20SurfaceView) findViewById(R.id.gl_surface_view);
             mGLSurfaceView.setEGLContextClientVersion(2);
-//            mGLSurfaceView.setPreserveEGLContextOnPause(true);
+            mGLSurfaceView.setPreserveEGLContextOnPause(true);
             mGLSurfaceView.setRenderer(new GLES20Renderer());
-//            mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+            mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         } else {
             System.out.println("This phone does not support OpenGLES 2.0, quiting...");
             System.exit(1);
