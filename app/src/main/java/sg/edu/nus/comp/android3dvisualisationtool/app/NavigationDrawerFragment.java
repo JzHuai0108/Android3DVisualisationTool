@@ -187,6 +187,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         addListenersToCheckboxes();
     }
