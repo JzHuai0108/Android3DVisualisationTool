@@ -10,7 +10,7 @@ import android.util.Log;
 public class GLES20Renderer extends GLRenderer {
 
     private static final String TAG = "GLES20Renderer";
-    private Triangle mTriangle;
+    private Points mPoints;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
     private final float[] mMVPMatrix = new float[16];
@@ -26,7 +26,7 @@ public class GLES20Renderer extends GLRenderer {
             // Set the background frame color
             GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            mTriangle = new Triangle();
+            mPoints = new Points();
         } else {
             // Adjust the viewport based on geometry changes,
             // such as screen rotation
@@ -69,7 +69,7 @@ public class GLES20Renderer extends GLRenderer {
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // Draw triangle
-        mTriangle.draw(scratch);
+        mPoints.draw(scratch);
     }
 
     /**
