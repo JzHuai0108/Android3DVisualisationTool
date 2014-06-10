@@ -1,6 +1,7 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app;
+package sg.edu.nus.comp.android3dvisualisationtool.app.DataReader;
 
 import android.app.Activity;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -8,11 +9,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import sg.edu.nus.comp.android3dvisualisationtool.app.Point;
+
 /**
  * Created by tang on 10/6/14.
  */
 public class DataReader extends Activity{
-    private List<Point> points = null;
+    private List<sg.edu.nus.comp.android3dvisualisationtool.app.Point> points = null;
 
     public DataReader(String filename) {
         openFile(new File(filename));

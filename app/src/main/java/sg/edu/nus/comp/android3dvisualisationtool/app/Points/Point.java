@@ -1,4 +1,6 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app;
+package sg.edu.nus.comp.android3dvisualisationtool.app.Points;
+
+import sg.edu.nus.comp.android3dvisualisationtool.app.DataReader.DataType;
 
 /**
  * Created by tang on 10/6/14.
