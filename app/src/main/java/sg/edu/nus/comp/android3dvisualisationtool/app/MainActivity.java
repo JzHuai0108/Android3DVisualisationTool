@@ -28,7 +28,7 @@ public class MainActivity extends Activity
     private CharSequence mTitle;
 
     // opengles view
-    private GLSurfaceView mGLSurfaceView;
+    private GLES20SurfaceView mGLSurfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,11 +126,11 @@ public class MainActivity extends Activity
     private void initialiseOpenGLESView() {
         if (hasGLES20()) {
 //            mGLSurfaceView = new GLSurfaceView(this);
-            mGLSurfaceView = (GLSurfaceView) findViewById(R.id.gl_surface_view);
+            mGLSurfaceView = (GLES20SurfaceView) findViewById(R.id.gl_surface_view);
             mGLSurfaceView.setEGLContextClientVersion(2);
-            mGLSurfaceView.setPreserveEGLContextOnPause(true);
+//            mGLSurfaceView.setPreserveEGLContextOnPause(true);
             mGLSurfaceView.setRenderer(new GLES20Renderer());
-            mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+//            mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         } else {
             System.out.println("This phone does not support OpenGLES 2.0, quiting...");
             System.exit(1);
