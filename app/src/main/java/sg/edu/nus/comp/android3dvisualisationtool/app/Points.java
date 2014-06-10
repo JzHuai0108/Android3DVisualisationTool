@@ -21,7 +21,7 @@ public class Points {
                     // Note that the uMVPMatrix factor *must be first* in order
                     // for the matrix multiplication product to be correct.
                     "  gl_Position = uMVPMatrix * vPosition;" +
-                    "  gl_PointSize = 10.0;" +
+                    "  gl_PointSize = 20.0;" +
                     "}";
 
     private final String fragmentShaderCode =
