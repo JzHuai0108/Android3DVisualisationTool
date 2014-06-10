@@ -6,9 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * A view container where OpenGL ES graphics can be drawn on screen.
- * This view can also be used to capture touch events, such as a user
- * interacting with drawn objects.
+ * Created by panlong on 6/6/14.
  */
 public class GLES20SurfaceView extends GLSurfaceView {
 

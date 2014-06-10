@@ -1,13 +1,13 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app;
 
+import android.opengl.GLES20;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import android.opengl.GLES20;
-
 /**
- * A two-dimensional triangle for use as a drawn object in OpenGL ES 2.0.
+ * Created by panlong on 6/6/14.
  */
 public class Triangle {
 

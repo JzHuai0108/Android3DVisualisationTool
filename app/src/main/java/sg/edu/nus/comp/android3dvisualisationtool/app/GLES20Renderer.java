@@ -1,23 +1,13 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app;
 
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-
 /**
- * Provides drawing instructions for a GLSurfaceView object. This class
- * must override the OpenGL ES drawing lifecycle methods:
- * <ul>
- *   <li>{@link android.opengl.GLSurfaceView.Renderer#onSurfaceCreated}</li>
- *   <li>{@link android.opengl.GLSurfaceView.Renderer#onDrawFrame}</li>
- *   <li>{@link android.opengl.GLSurfaceView.Renderer#onSurfaceChanged}</li>
- * </ul>
+ * Created by panlong on 6/6/14.
  */
-public class GLES20Renderer implements GLSurfaceView.Renderer {
+public class GLES20Renderer extends GLRenderer {
 
     private static final String TAG = "GLES20Renderer";
     private Triangle mTriangle;
@@ -31,16 +21,28 @@ public class GLES20Renderer implements GLSurfaceView.Renderer {
     private float mAngle;
 
     @Override
-    public void onSurfaceCreated(GL10 unused, EGLConfig config) {
+    public void onCreate(int width, int height, boolean isContextLost) {
+        if (isContextLost) {
+            // Set the background frame color
+            GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-        // Set the background frame color
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            mTriangle = new Triangle();
+        } else {
+            // Adjust the viewport based on geometry changes,
+            // such as screen rotation
+            GLES20.glViewport(0, 0, width, height);
 
-        mTriangle = new Triangle();
+            float ratio = (float) width / height;
+
+            // this projection matrix is applied to object coordinates
+            // in the onDrawFrame() method
+            Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+        }
     }
 
     @Override
-    public void onDrawFrame(GL10 unused) {
+    public void onDrawFrame(boolean isFirstDraw) {
+
         float[] scratch = new float[16];
 
         // Draw background color
@@ -68,20 +70,6 @@ public class GLES20Renderer implements GLSurfaceView.Renderer {
 
         // Draw triangle
         mTriangle.draw(scratch);
-    }
-
-    @Override
-    public void onSurfaceChanged(GL10 unused, int width, int height) {
-        // Adjust the viewport based on geometry changes,
-        // such as screen rotation
-        GLES20.glViewport(0, 0, width, height);
-
-        float ratio = (float) width / height;
-
-        // this projection matrix is applied to object coordinates
-        // in the onDrawFrame() method
-        Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
-
     }
 
     /**
