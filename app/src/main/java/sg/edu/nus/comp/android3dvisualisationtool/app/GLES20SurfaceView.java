@@ -9,26 +9,19 @@ import android.view.MotionEvent;
  * Created by panlong on 6/6/14.
  */
 public class GLES20SurfaceView extends GLSurfaceView {
-
-    private final GLES20Renderer mRenderer;
+    private GLES20Renderer mRenderer = null;
 
     public GLES20SurfaceView(Context context) {
         super(context);
-
-        // Create an OpenGL ES 2.0 context.
-        setEGLContextClientVersion(2);
-
-        // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new GLES20Renderer();
-        setRenderer(mRenderer);
-
-        // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+        configureRenderer();
     }
 
     public GLES20SurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        configureRenderer();
+    }
 
+    private void configureRenderer() {
         // Create an OpenGL ES 2.0 context.
         setEGLContextClientVersion(2);
 
@@ -79,5 +72,4 @@ public class GLES20SurfaceView extends GLSurfaceView {
         mPreviousY = y;
         return true;
     }
-
 }
