@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app.DataReader;
+package sg.edu.nus.comp.android3dvisualisationtool.app.dataReader;
 
 /**
  * Created by tang on 10/6/14.

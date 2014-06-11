@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app.DataReader;
+package sg.edu.nus.comp.android3dvisualisationtool.app.dataReader;
 
 import android.app.Activity;
 
@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.edu.nus.comp.android3dvisualisationtool.app.Points.Point;
+import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 
 /**
  * Created by tang on 10/6/14.

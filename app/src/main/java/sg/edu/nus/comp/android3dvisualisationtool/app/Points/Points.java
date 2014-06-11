@@ -1,4 +1,4 @@
-package sg.edu.nus.comp.android3dvisualisationtool.app.Points;
+package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
 

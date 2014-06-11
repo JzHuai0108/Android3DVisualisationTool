@@ -4,7 +4,7 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
 
-import sg.edu.nus.comp.android3dvisualisationtool.app.Points.Points;
+import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 
 /**
  * Created by panlong on 6/6/14.
