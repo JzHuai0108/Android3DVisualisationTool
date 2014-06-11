@@ -4,12 +4,13 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 
 /**
  * Created by panlong on 6/6/14.
  */
-public class GLES20Renderer extends GLRenderer {
+public class GLES20Renderer extends GLRenderer implements Constants {
 
     private static final String TAG = "GLES20Renderer";
     private Points mPoints;
