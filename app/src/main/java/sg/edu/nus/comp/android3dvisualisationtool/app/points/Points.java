@@ -25,7 +25,7 @@ public class Points {
                     // Note that the uMVPMatrix factor *must be first* in order
                     // for the matrix multiplication product to be correct.
                     "  gl_Position = uMVPMatrix * vPosition;" +
-                    "  gl_PointSize = 20.0;" +
+                    "  gl_PointSize = 1.0;" +
                     "}";
 
     private final String fragmentShaderCode =
@@ -66,9 +66,9 @@ public class Points {
         ArrayList<Float> mutableArrayOfPoint = new ArrayList<Float>();
 
         for (Point p : pointsList) {
-            mutableArrayOfPoint.add(p.getX());
-            mutableArrayOfPoint.add(p.getY());
-            mutableArrayOfPoint.add(p.getZ());
+            mutableArrayOfPoint.add(p.getX() * 10);
+            mutableArrayOfPoint.add(p.getY() * 10);
+            mutableArrayOfPoint.add(p.getZ() * 10);
         }
 
         pointCoords = new float[mutableArrayOfPoint.size()];

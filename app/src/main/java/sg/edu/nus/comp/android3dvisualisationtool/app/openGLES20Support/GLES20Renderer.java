@@ -56,7 +56,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             float bottom = -1;
             float top = 1;
             float near = 0.1f;
-            float far = 10.0f;
+            float far = 10000.0f;
             Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
         }
     }
@@ -72,7 +72,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         // Set the camera position (View matrix)
         float centerX = 0f;
         float centerY = 0f;
-        float centerZ = -3;
+        float centerZ = -2f;
 
         float lookAtX = 0f;
         float lookAtY = 0f;
