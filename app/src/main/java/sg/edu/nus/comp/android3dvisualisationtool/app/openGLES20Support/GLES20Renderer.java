@@ -27,7 +27,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     public void onCreate(int width, int height, boolean isContextLost) {
         if (isContextLost) {
             // Set the background frame color
-            GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            GLES20.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 
             mPoints = new Points();
         } else {
