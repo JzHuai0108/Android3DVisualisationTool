@@ -1,9 +1,8 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.dataReader;
 
-import android.app.Activity;
+import android.content.Context;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -14,26 +13,24 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 /**
  * Created by tang on 10/6/14.
  */
-public class DataReader extends Activity{
+public class DataReader{
     private List<Point> points = null;
+    private Context context = null;
 
-    public DataReader(String filename) {
-        openFile(new File(filename));
-    }
-
-    public DataReader(File file) {
-        openFile(file);
+    public DataReader(Context context, String filename) {
+        this.context = context;
+        openFile(filename);
     }
 
     public List<Point> getPoints() {
         return points;
     }
 
-    private void openFile(File file)
+    private void openFile(String filename)
     {
         points = new ArrayList<Point>();
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("data.pcd")));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(context.getAssets().open(filename)));
             int numOfPoints = 0;
 
             //read number of points and skip other unused header entries

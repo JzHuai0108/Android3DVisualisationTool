@@ -10,14 +10,18 @@ import android.view.MotionEvent;
  */
 public class GLES20SurfaceView extends GLSurfaceView {
     private GLES20Renderer mRenderer = null;
+    private Context context;
 
     public GLES20SurfaceView(Context context) {
         super(context);
-        configureRenderer();
     }
 
     public GLES20SurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
         configureRenderer();
     }
 
@@ -26,7 +30,7 @@ public class GLES20SurfaceView extends GLSurfaceView {
         setEGLContextClientVersion(2);
 
         // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new GLES20Renderer();
+        mRenderer = new GLES20Renderer(context);
         setRenderer(mRenderer);
 
         // Render the view only when there is a change in the drawing data

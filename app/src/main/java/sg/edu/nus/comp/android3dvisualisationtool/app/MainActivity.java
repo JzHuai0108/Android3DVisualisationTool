@@ -54,31 +54,6 @@ public class MainActivity extends Activity
         initialiseOpenGLESView();
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-//        FragmentManager fragmentManager = getFragmentManager();
-//        fragmentManager.beginTransaction()
-//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-//                .commit();
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            /*
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-            */
-        }
-    }
-
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -128,12 +103,8 @@ public class MainActivity extends Activity
 
     private void initialiseOpenGLESView() {
         if (hasGLES20()) {
-//            mGLSurfaceView = new GLSurfaceView(this);
             mGLSurfaceView = (GLES20SurfaceView) findViewById(R.id.gl_surface_view);
-//            mGLSurfaceView.setEGLContextClientVersion(2);
-//            mGLSurfaceView.setPreserveEGLContextOnPause(true);
-//            mGLSurfaceView.setRenderer(new GLES20Renderer());
-//            mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+            mGLSurfaceView.setContext(getApplicationContext());
         } else {
             System.out.println("This phone does not support OpenGLES 2.0, quiting...");
             System.exit(1);
@@ -158,6 +129,11 @@ public class MainActivity extends Activity
     // handle dialog event
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
 
     }
 }

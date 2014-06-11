@@ -1,10 +1,15 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import java.util.List;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
+import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 
 /**
@@ -22,6 +27,11 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private final float[] mRotationMatrix = new float[16];
 
     private float mAngle;
+    private Context context;
+
+    public GLES20Renderer(Context context) {
+        this.context = context;
+    }
 
     @Override
     public void onCreate(int width, int height, boolean isContextLost) {
@@ -29,7 +39,9 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             // Set the background frame color
             GLES20.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 
-            mPoints = new Points();
+            DataReader dr = new DataReader(context, "data.pcd");
+            List<Point> lstPoint = dr.getPoints();
+            mPoints = new Points(lstPoint);
         } else {
             // Adjust the viewport based on geometry changes,
             // such as screen rotation
@@ -39,7 +51,13 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
             // this projection matrix is applied to object coordinates
             // in the onDrawFrame() method
-            Matrix.frustumM(mProjectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+            float left = -ratio;
+            float right = ratio;
+            float bottom = -1;
+            float top = 1;
+            float near = 0.1f;
+            float far = 10.0f;
+            Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
         }
     }
 
@@ -52,7 +70,19 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
         // Set the camera position (View matrix)
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        float centerX = 0f;
+        float centerY = 0f;
+        float centerZ = -3;
+
+        float lookAtX = 0f;
+        float lookAtY = 0f;
+        float lookAtZ = 0f;
+
+        float lookUpX = 0f;
+        float lookUpY = 1f;
+        float lookUpZ = 0f;
+
+        Matrix.setLookAtM(mViewMatrix, 0, centerX, centerY, centerZ, lookAtX, lookAtY, lookAtZ, lookUpX, lookUpY, lookUpZ);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
