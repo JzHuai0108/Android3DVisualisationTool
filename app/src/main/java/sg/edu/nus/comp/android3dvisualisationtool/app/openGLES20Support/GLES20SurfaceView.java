@@ -119,6 +119,11 @@ public class GLES20SurfaceView extends GLSurfaceView {
                 }
                 break;
             }
+
+            case MotionEvent.ACTION_POINTER_DOWN: {
+                mActivePointerId = INVALID_POINTER_ID;
+                break;
+            }
         }
         return true;
     }
