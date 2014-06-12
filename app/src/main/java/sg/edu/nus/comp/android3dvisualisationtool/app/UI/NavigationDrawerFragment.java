@@ -87,7 +87,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()){
-                    Toast.makeText(getActivity(), "Show Axes Box checked", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Show Axes", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -97,7 +97,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()){
-                    Toast.makeText(getActivity(), "Show Axes Box checked", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Show Normal Vectors", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -107,7 +107,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()){
-                    Toast.makeText(getActivity(), "Show Axes Box checked", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Set Origin to Center of Mass", Toast.LENGTH_LONG).show();
                 }
             }
         });
