@@ -1,6 +1,9 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -8,26 +11,12 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
-import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
-
 /**
  * Created by panlong on 6/6/14.
  */
 public class Points implements Constants{
 
-    private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
-            "uniform mat4 uMVPMatrix;" +
-                    "attribute vec4 vPosition;" +
-                    "void main() {" +
-                    // the matrix must be included as a modifier of gl_Position
-                    // Note that the uMVPMatrix factor *must be first* in order
-                    // for the matrix multiplication product to be correct.
-                    "  gl_Position = uMVPMatrix * vPosition;" +
-                    "  gl_PointSize = 1.0;" +
-                    "}";
+    private final String vertexShaderCode;
 
     private final String fragmentShaderCode =
             "precision mediump float;" +
@@ -35,12 +24,14 @@ public class Points implements Constants{
                     "void main() {" +
                     "  gl_FragColor = vColor;" +
                     "}";
-
+    private ScaleConfiguration sc;
     private FloatBuffer vertexBuffer;
     private int mProgram;
     private int mPositionHandle;
     private int mColorHandle;
     private int mMVPMatrixHandle;
+    private double radius;
+    private double scaleFactor;
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
@@ -57,6 +48,22 @@ public class Points implements Constants{
     public Points(List<Point> lstPoints) {
         vertexCount = lstPoints.size();
         pointsList = lstPoints;
+        sc = new ScaleConfiguration(pointsList, DEFAULT_MAX_ABS_COORIDINATE);
+        radius = sc.getRadius();
+        scaleFactor = sc.getScaleFactor();
+
+        vertexShaderCode =
+        // This matrix member variable provides a hook to manipulate
+        // the coordinates of the objects that use this vertex shader
+        "uniform mat4 uMVPMatrix;" +
+                "attribute vec4 vPosition;" +
+                "void main() {" +
+                // the matrix must be included as a modifier of gl_Position
+                // Note that the uMVPMatrix factor *must be first* in order
+                // for the matrix multiplication product to be correct.
+                "  gl_Position = uMVPMatrix * vPosition;" +
+                "  gl_PointSize = " + radius * scaleFactor + ";" +
+                "}";
 
         generateCoordsArray();
         initBuffer();
@@ -67,9 +74,9 @@ public class Points implements Constants{
         ArrayList<Float> mutableArrayOfPoint = new ArrayList<Float>();
 
         for (Point p : pointsList) {
-            mutableArrayOfPoint.add(p.getX() * 10);
-            mutableArrayOfPoint.add(p.getY() * 10);
-            mutableArrayOfPoint.add(p.getZ() * 10);
+            mutableArrayOfPoint.add(p.getX() * (float)scaleFactor);
+            mutableArrayOfPoint.add(p.getY() * (float)scaleFactor);
+            mutableArrayOfPoint.add(p.getZ() * (float)scaleFactor);
         }
 
         pointCoords = new float[mutableArrayOfPoint.size()];
