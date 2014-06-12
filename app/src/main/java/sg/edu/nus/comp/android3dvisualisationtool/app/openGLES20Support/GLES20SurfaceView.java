@@ -10,10 +10,15 @@ import android.view.ScaleGestureDetector;
  * Created by panlong on 6/6/14.
  */
 public class GLES20SurfaceView extends GLSurfaceView {
+    private static int NONE = 0;
+    private static int ROTATE = 1;
+    private static int ZOOM = 2;
+
     private GLES20Renderer mRenderer = null;
     ScaleGestureDetector detector;
     private float scaleFactor = 1;
     private Context context;
+    private int mode = NONE;
 
     public GLES20SurfaceView(Context context) {
         super(context);
@@ -52,15 +57,24 @@ public class GLES20SurfaceView extends GLSurfaceView {
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
 
-        detector.onTouchEvent(e);
-
         float x = e.getX();
         float y = e.getY();
 
         switch (e.getAction()) {
             case MotionEvent.ACTION_MOVE:
+                mode = ROTATE;
                 mRenderer.setRotation((int)mPreviousX, (int)mPreviousY, (int)x, (int)y);  // = 180.0f / 320
-                requestRender();
+                break;
+
+            case MotionEvent.ACTION_POINTER_DOWN:
+                mode = ZOOM;
+                break;
+        }
+
+        detector.onTouchEvent(e);
+
+        if (mode == ROTATE || mode == ZOOM) {
+            requestRender();
         }
 
         mPreviousX = x;
@@ -71,10 +85,8 @@ public class GLES20SurfaceView extends GLSurfaceView {
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            System.out.println("pinch gesture");
             scaleFactor *= detector.getScaleFactor();
             mRenderer.setCameraDistance(scaleFactor);
-            requestRender();
             return true;
         }
     }

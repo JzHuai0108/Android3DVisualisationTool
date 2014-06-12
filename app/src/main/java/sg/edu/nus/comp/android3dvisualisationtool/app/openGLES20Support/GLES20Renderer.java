@@ -4,14 +4,13 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
-
-import java.util.List;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 import sg.edu.nus.comp.android3dvisualisationtool.app.util.VirtualSphere;
+
+import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -206,6 +205,6 @@ public class GLES20Renderer extends GLRenderer implements Constants {
      * @param scale
      * set new camera distance according to the scale passed from touch event
      */
-    public void setCameraDistance(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE * scale; };
+    public void setCameraDistance(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE / scale; };
 
 }
