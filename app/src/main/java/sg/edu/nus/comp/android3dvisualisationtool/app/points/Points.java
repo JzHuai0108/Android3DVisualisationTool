@@ -62,7 +62,7 @@ public class Points implements Constants{
                 // Note that the uMVPMatrix factor *must be first* in order
                 // for the matrix multiplication product to be correct.
                 "  gl_Position = uMVPMatrix * vPosition;" +
-                "  gl_PointSize = " + radius * scaleFactor * 2 + ";" +
+                "  gl_PointSize = " + radius * scaleFactor * 5 + ";" +
                 "}";
 
         generateCoordsArray();

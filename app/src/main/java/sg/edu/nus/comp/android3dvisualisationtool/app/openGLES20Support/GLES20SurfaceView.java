@@ -11,6 +11,8 @@ import android.view.ScaleGestureDetector;
  */
 public class GLES20SurfaceView extends GLSurfaceView {
     private GLES20Renderer mRenderer = null;
+    ScaleGestureDetector detector;
+    private float scaleFactor = 1;
     private Context context;
 
     public GLES20SurfaceView(Context context) {
@@ -38,14 +40,7 @@ public class GLES20SurfaceView extends GLSurfaceView {
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
         //set up pinch gesture
-        ScaleGestureDetector sgd = new ScaleGestureDetector(context, new ScaleGestureDetector.SimpleOnScaleGestureListener(){
-            @Override
-            public boolean onScale(ScaleGestureDetector detector) {
-                mRenderer.setCameraDistance(detector.getScaleFactor());
-                return true;
-            }
-
-        });
+        detector = new ScaleGestureDetector(getContext(), new ScaleListener());
     }
 
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
@@ -57,6 +52,8 @@ public class GLES20SurfaceView extends GLSurfaceView {
         // MotionEvent reports input details from the touch screen
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
+
+        detector.onTouchEvent(e);
 
         float x = e.getX();
         float y = e.getY();
@@ -86,5 +83,16 @@ public class GLES20SurfaceView extends GLSurfaceView {
         mPreviousX = x;
         mPreviousY = y;
         return true;
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            System.out.println("pinch gesture");
+            scaleFactor *= detector.getScaleFactor();
+            mRenderer.setCameraDistance(scaleFactor);
+            requestRender();
+            return true;
+        }
     }
 }
