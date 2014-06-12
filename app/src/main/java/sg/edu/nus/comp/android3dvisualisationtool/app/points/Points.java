@@ -1,15 +1,16 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
-import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 /**
  * Created by panlong on 6/6/14.
@@ -62,7 +63,7 @@ public class Points implements Constants{
                 // Note that the uMVPMatrix factor *must be first* in order
                 // for the matrix multiplication product to be correct.
                 "  gl_Position = uMVPMatrix * vPosition;" +
-                "  gl_PointSize = " + radius * scaleFactor * 2 + ";" +
+                "  gl_PointSize = " + radius * scaleFactor * 10 + ";" +
                 "}";
 
         generateCoordsArray();

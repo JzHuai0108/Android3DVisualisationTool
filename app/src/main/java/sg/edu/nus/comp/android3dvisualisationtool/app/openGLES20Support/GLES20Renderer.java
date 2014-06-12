@@ -11,6 +11,7 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
+import sg.edu.nus.comp.android3dvisualisationtool.app.util.VirtualSphere;
 
 /**
  * Created by panlong on 6/6/14.
@@ -19,12 +20,15 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
     private static final String TAG = "GLES20Renderer";
     private Points mPoints;
+    private VirtualSphere vs = new VirtualSphere();
+    private android.graphics.Point cueCenter = new android.graphics.Point();
+    private int cueRadius;
 
     // mMVPMatrix is an abbreviation for "Model View Projection Matrix"
-    private final float[] mMVPMatrix = new float[16];
-    private final float[] mProjectionMatrix = new float[16];
-    private final float[] mViewMatrix = new float[16];
-    private final float[] mRotationMatrix = new float[16];
+    private float[] mMVPMatrix = new float[16];
+    private float[] mProjectionMatrix = new float[16];
+    private float[] mViewMatrix = new float[16];
+    private float[] mRotationMatrix = sg.edu.nus.comp.android3dvisualisationtool.app.util.Matrix.identity();
 
     private float cameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
     private float mAngle;
@@ -56,6 +60,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             float far = 1000.0f;
             Matrix.perspectiveM(mProjectionMatrix, 0, (float)DEFAULT_FIELD_OF_VIEW, ratio, near, far);
         }
+        setupVS(width, height);
     }
 
     @Override
@@ -84,15 +89,6 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
-        // Create a rotation for the triangle
-
-        // Use the following code to generate constant rotation.
-        // Leave this code out when using TouchEvents.
-        // long time = SystemClock.uptimeMillis() % 4000L;
-        // float angle = 0.090f * ((int) time);
-
-        Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, 1.0f);
-
         // Combine the rotation matrix with the projection and camera view
         // Note that the mMVPMatrix factor *must be first* in order
         // for the matrix multiplication product to be correct.
@@ -100,6 +96,12 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
         // Draw triangle
         mPoints.draw(scratch);
+    }
+
+    public void setupVS(int w, int h) {
+        cueCenter.x = w / 2;
+        cueCenter.y = h / 2;
+        cueRadius = (int) (Math.sqrt(w * w + h * h) / 2);
     }
 
     /**
@@ -145,22 +147,65 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         }
     }
 
+    private float[] mouseMtx = new float[16];
     /**
-     * Returns the rotation angle of the triangle shape (mTriangle).
-     *
-     * @return - A float representing the rotation angle.
+     * @param previousX - x coordinate of previous position of touch event
+     * @param previousY - y coordinate of previous position of touch event
+     * @param x - x coordinate of new position of touch event
+     * @param y - y coordinate of new position of touch event
+     * set new rotation matrix
      */
-    public float getAngle() {
-        return mAngle;
+    public void setRotation(int previousX, int previousY, int x, int y) {
+        vs.makeRotationMtx(new android.graphics.Point(previousX, previousY), new android.graphics.Point(x, y), cueCenter, cueRadius,
+                mouseMtx);
+
+        mRotationMatrix = sg.edu.nus.comp.android3dvisualisationtool.app.util.Matrix.multiply(mRotationMatrix, mouseMtx);
+        mRotationMatrix = sg.edu.nus.comp.android3dvisualisationtool.app.util.Matrix.multiply(mRotationMatrix, mouseMtx);
+        fixRotationMatrix();
+
+
     }
 
-    /**
-     * Sets the rotation angle of the triangle shape (mTriangle).
-     */
-    public void setAngle(float angle) {
-        mAngle = angle;
+    private void fixRotationMatrix() {
+        mRotationMatrix[3] = mRotationMatrix[7] = mRotationMatrix[11] = mRotationMatrix[12] = mRotationMatrix[13] = mRotationMatrix[14] = 0.0f;
+        mRotationMatrix[15] = 1.0f;
+        float fac;
+        if ((fac = (float) Math.sqrt((mRotationMatrix[0] * mRotationMatrix[0])
+                + (mRotationMatrix[4] * mRotationMatrix[4])
+                + (mRotationMatrix[8] * mRotationMatrix[8]))) != 1.0f) {
+            if (fac != 0.0f) {
+                fac = 1.0f / fac;
+                mRotationMatrix[0] *= fac;
+                mRotationMatrix[4] *= fac;
+                mRotationMatrix[8] *= fac;
+            }
+        }
+        if ((fac = (float) Math.sqrt((mRotationMatrix[1] * mRotationMatrix[1])
+                + (mRotationMatrix[5] * mRotationMatrix[5])
+                + (mRotationMatrix[9] * mRotationMatrix[9]))) != 1.0f) {
+            if (fac != 0.0f) {
+                fac = 1.0f / fac;
+                mRotationMatrix[1] *= fac;
+                mRotationMatrix[5] *= fac;
+                mRotationMatrix[9] *= fac;
+            }
+        }
+        if ((fac = (float) Math.sqrt((mRotationMatrix[2] * mRotationMatrix[2])
+                + (mRotationMatrix[6] * mRotationMatrix[6])
+                + (mRotationMatrix[10] * mRotationMatrix[10]))) != 1.0f) {
+            if (fac != 0.0f) {
+                fac = 1.0f / fac;
+                mRotationMatrix[2] *= fac;
+                mRotationMatrix[6] *= fac;
+                mRotationMatrix[10] *= fac;
+            }
+        }
     }
-
+    
+    /**
+     * @param scale
+     * set new camera distance according to the scale passed from touch event
+     */
     public void setCameraDistance(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE * scale; };
 
 }
