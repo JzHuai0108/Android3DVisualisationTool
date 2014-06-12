@@ -135,6 +135,7 @@ public class GLES20SurfaceView extends GLSurfaceView {
         public boolean onScale(ScaleGestureDetector detector) {
             scaleFactor *= detector.getScaleFactor();
             mRenderer.setCameraDistance(scaleFactor);
+            requestRender();
             return true;
         }
     }
