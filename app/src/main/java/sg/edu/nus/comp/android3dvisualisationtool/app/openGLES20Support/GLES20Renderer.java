@@ -25,6 +25,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private final float[] mViewMatrix = new float[16];
     private final float[] mRotationMatrix = new float[16];
 
+    private float cameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
     private float mAngle;
     private Context context;
 
@@ -72,7 +73,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         // Set the camera position (View matrix)
         float centerX = 0f;
         float centerY = 0f;
-        float centerZ = (float)DEFAULT_CAMERA_DISTANCE*2;
+        float centerZ = cameraDistance;
 
         float lookAtX = 0f;
         float lookAtY = 0f;
@@ -163,5 +164,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     public void setAngle(float angle) {
         mAngle = angle;
     }
+
+    public void setCameraDistance(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE * scale; };
 
 }

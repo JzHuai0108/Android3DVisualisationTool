@@ -4,6 +4,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 
 /**
  * Created by panlong on 6/6/14.
@@ -35,6 +36,16 @@ public class GLES20SurfaceView extends GLSurfaceView {
 
         // Render the view only when there is a change in the drawing data
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
+        //set up pinch gesture
+        ScaleGestureDetector sgd = new ScaleGestureDetector(context, new ScaleGestureDetector.SimpleOnScaleGestureListener(){
+            @Override
+            public boolean onScale(ScaleGestureDetector detector) {
+                mRenderer.setCameraDistance(detector.getScaleFactor());
+                return true;
+            }
+
+        });
     }
 
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
