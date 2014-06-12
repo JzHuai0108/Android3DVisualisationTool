@@ -20,13 +20,14 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import sg.edu.nus.comp.android3dvisualisationtool.app.R;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements Constants{
 
     /**
      * Per the design guidelines, you should show the drawer on launch until the user manually
@@ -46,6 +47,10 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mUserLearnedDrawer;
 
     private CheckBox showAxesBox, showNormalBox, setOriginBox;
+
+    private static boolean showAxes = DEFAULT_IS_AXES_VISIBLE;
+    private static boolean showNormal = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
+    private static boolean setOrigin = DEFAULT_IS_SET_TO_ORIGIN;
 
     public NavigationDrawerFragment() {
     }
@@ -88,7 +93,8 @@ public class NavigationDrawerFragment extends Fragment {
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()){
                     Toast.makeText(getActivity(), "Show Axes", Toast.LENGTH_LONG).show();
-                }
+                    setShowAxes(true);
+                } else setShowAxes(false);
             }
         });
 
@@ -98,7 +104,8 @@ public class NavigationDrawerFragment extends Fragment {
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()){
                     Toast.makeText(getActivity(), "Show Normal Vectors", Toast.LENGTH_LONG).show();
-                }
+                    setShowNormal(true);
+                } else setShowNormal(false);
             }
         });
 
@@ -108,7 +115,8 @@ public class NavigationDrawerFragment extends Fragment {
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()){
                     Toast.makeText(getActivity(), "Set Origin to Center of Mass", Toast.LENGTH_LONG).show();
-                }
+                    setSetOrigin(true);
+                } else setSetOrigin(false);
             }
         });
     }
@@ -244,5 +252,29 @@ public class NavigationDrawerFragment extends Fragment {
          * Called when an item in the navigation drawer is selected.
          */
         void onNavigationDrawerItemSelected(int position);
+    }
+
+    private void setShowAxes(boolean isChecked){
+        showAxes = isChecked;
+    }
+
+    private void setShowNormal(boolean isChecked){
+        showNormal = isChecked;
+    }
+
+    public void setSetOrigin(boolean isChecked){
+        setOrigin = isChecked;
+    }
+
+    public static boolean getShowAxes(){
+        return showAxes;
+    }
+
+    public static boolean getShowNormal(){
+        return showNormal;
+    }
+
+    public static boolean getSetOrigin(){
+        return setOrigin;
     }
 }
