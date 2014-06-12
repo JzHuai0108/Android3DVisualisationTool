@@ -57,18 +57,35 @@ public class GLES20SurfaceView extends GLSurfaceView {
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
 
-        float x = e.getX();
-        float y = e.getY();
+        float x = e.getX(), y = e.getY();
 
         switch (e.getAction()) {
-            case MotionEvent.ACTION_MOVE:
-                mode = ROTATE;
-                mRenderer.setRotation((int)mPreviousX, (int)mPreviousY, (int)x, (int)y);  // = 180.0f / 320
-                break;
-
             case MotionEvent.ACTION_POINTER_DOWN:
                 mode = ZOOM;
                 break;
+
+            case MotionEvent.ACTION_DOWN:
+                mPreviousX = x;
+                mPreviousY = y;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                int count = e.getPointerCount();
+                if (count == 1) {
+                    mode = ROTATE;
+                    mRenderer.setRotation((int)mPreviousX, (int)mPreviousY, (int)x, (int)y);  // = 180.0f / 320
+                    mPreviousX = x;
+                    mPreviousY = y;
+                }
+                break;
+
+            case MotionEvent.ACTION_POINTER_UP:
+                mode = ROTATE;
+                mRenderer.setRotation((int)mPreviousX, (int)mPreviousY, (int)x, (int)y);  // = 180.0f / 320
+                mPreviousX = x;
+                mPreviousY = y;
+                break;
+
         }
 
         detector.onTouchEvent(e);
@@ -77,8 +94,6 @@ public class GLES20SurfaceView extends GLSurfaceView {
             requestRender();
         }
 
-        mPreviousX = x;
-        mPreviousY = y;
         return true;
     }
 
