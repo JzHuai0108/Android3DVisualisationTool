@@ -4,13 +4,12 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
-
-import java.util.List;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
+
+import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -56,8 +55,9 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             float bottom = -1;
             float top = 1;
             float near = 0.1f;
-            float far = 10000.0f;
-            Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
+            float far = 1000.0f;
+            //Matrix.frustumM(mProjectionMatrix, 0, left, right, bottom, top, near, far);
+            Matrix.perspectiveM(mProjectionMatrix, 0, (float)DEFAULT_FIELD_OF_VIEW, ratio, near, far);
         }
     }
 
@@ -72,7 +72,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         // Set the camera position (View matrix)
         float centerX = 0f;
         float centerY = 0f;
-        float centerZ = -2f;
+        float centerZ = (float)DEFAULT_CAMERA_DISTANCE*2;
 
         float lookAtX = 0f;
         float lookAtY = 0f;
