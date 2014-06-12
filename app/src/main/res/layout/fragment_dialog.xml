@@ -3,7 +3,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="@dimen/dialog_width"
 android:layout_height="@dimen/dialog_height"
 android:layout_gravity="center"
-tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.Dialog_Fragment">
+tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment">
 
 
 <LinearLayout
