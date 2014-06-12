@@ -1,16 +1,16 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
-import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 /**
  * Created by panlong on 6/6/14.
@@ -75,9 +75,16 @@ public class Points implements Constants{
         ArrayList<Float> mutableArrayOfPoint = new ArrayList<Float>();
 
         for (Point p : pointsList) {
-            mutableArrayOfPoint.add(p.getX() * (float)scaleFactor);
-            mutableArrayOfPoint.add(p.getY() * (float)scaleFactor);
-            mutableArrayOfPoint.add(p.getZ() * (float)scaleFactor);
+            if (NavigationDrawerFragment.getSetOrigin()) {
+                double[] centerOfMass = sc.getCenterOfMass();
+                mutableArrayOfPoint.add(p.getX() * (float)scaleFactor - (float)centerOfMass[0]);
+                mutableArrayOfPoint.add(p.getY() * (float)scaleFactor - (float)centerOfMass[1]);
+                mutableArrayOfPoint.add(p.getZ() * (float)scaleFactor - (float)centerOfMass[2]);
+            } else {
+                mutableArrayOfPoint.add(p.getX() * (float)scaleFactor);
+                mutableArrayOfPoint.add(p.getY() * (float)scaleFactor);
+                mutableArrayOfPoint.add(p.getZ() * (float)scaleFactor);
+            }
         }
 
         pointCoords = new float[mutableArrayOfPoint.size()];
