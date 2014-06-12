@@ -76,20 +76,22 @@ public class GLES20SurfaceView extends GLSurfaceView {
             }
 
             case MotionEvent.ACTION_MOVE: {
-                // Find the index of the active pointer and fetch its position
-                final int pointerIndex =
-                        MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                if (mActivePointerId != INVALID_POINTER_ID) {
+                    // Find the index of the active pointer and fetch its position
+                    final int pointerIndex =
+                            MotionEventCompat.findPointerIndex(ev, mActivePointerId);
 
-                final float x = MotionEventCompat.getX(ev, pointerIndex);
-                final float y = MotionEventCompat.getY(ev, pointerIndex);
+                    final float x = MotionEventCompat.getX(ev, pointerIndex);
+                    final float y = MotionEventCompat.getY(ev, pointerIndex);
 
-                mRenderer.setRotation((int)mPreviousX, (int)mPreviousY, (int)x, (int)y);
+                    mRenderer.setRotation((int) mPreviousX, (int) mPreviousY, (int) x, (int) y);
 
-                requestRender();
+                    requestRender();
 
-                // Remember this touch position for the next move event
-                mPreviousX = x;
-                mPreviousY = y;
+                    // Remember this touch position for the next move event
+                    mPreviousX = x;
+                    mPreviousY = y;
+                }
 
                 break;
             }
