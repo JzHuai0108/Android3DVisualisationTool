@@ -31,7 +31,7 @@
         android:layout_width="@dimen/dialog_width"
         android:layout_height="@dimen/dialog_height"
         android:layout_gravity="center"
-        android:name="sg.edu.nus.comp.android3dvisualisationtool.app.UI.Dialog_Fragment"
+        android:name="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
         tools:layout="@layout/fragment_dialog" />
 
 </android.support.v4.widget.DrawerLayout>

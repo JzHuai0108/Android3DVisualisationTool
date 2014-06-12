@@ -12,19 +12,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import sg.edu.nus.comp.android3dvisualisationtool.app.UI.Dialog_Fragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20SurfaceView;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, Dialog_Fragment.OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, SliderFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private Dialog_Fragment mDialog_fragment;
+    private SliderFragment mDialog_fragment;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -48,7 +48,7 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        mDialog_fragment = (Dialog_Fragment)
+        mDialog_fragment = (SliderFragment)
                 getFragmentManager().findFragmentById(R.id.drawer_layout);
 
         initialiseOpenGLESView();
@@ -84,7 +84,7 @@ public class MainActivity extends Activity
             int id = item.getItemId();
             if (id == R.id.action_dialog) {
                 FragmentManager fm = getFragmentManager();
-                mDialog_fragment = new Dialog_Fragment();
+                mDialog_fragment = new SliderFragment();
                 mDialog_fragment.show(fm, "fragment_dialog");
             }
             return super.onOptionsItemSelected(item);
