@@ -4,13 +4,14 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
+
+import java.util.List;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 import sg.edu.nus.comp.android3dvisualisationtool.app.util.VirtualSphere;
-
-import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -29,8 +30,13 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private float[] mViewMatrix = new float[16];
     private float[] mRotationMatrix = sg.edu.nus.comp.android3dvisualisationtool.app.util.Matrix.identity();
 
-    private float cameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
-    private float mAngle;
+    private float cameraDistance = (float) DEFAULT_CAMERA_DISTANCE;
+    private float cameraFieldOfView = (float) DEFAULT_FIELD_OF_VIEW;
+    private float near = (float) DEFAULT_CAMERA_NEAR_CLIP;
+    private float far = (float) DEFAULT_CAMERA_FAR_CLIP;
+    private float lookAtX = (float) DEFAULT_LOOK_AT_POINT_X;
+    private float lookAtY = (float) DEFAULT_LOOK_AT_POINT_Y;
+
     private Context context;
 
     public GLES20Renderer(Context context) {
@@ -55,9 +61,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
             // this projection matrix is applied to object coordinates
             // in the onDrawFrame() method
-            float near = 0.1f;
-            float far = 1000.0f;
-            Matrix.perspectiveM(mProjectionMatrix, 0, (float)DEFAULT_FIELD_OF_VIEW, ratio, near, far);
+            Matrix.perspectiveM(mProjectionMatrix, 0, cameraFieldOfView, ratio, near, far);
         }
         setupVS(width, height);
     }
@@ -75,8 +79,6 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         float centerY = 0f;
         float centerZ = cameraDistance;
 
-        float lookAtX = 0f;
-        float lookAtY = 0f;
         float lookAtZ = 0f;
 
         float lookUpX = 0f;

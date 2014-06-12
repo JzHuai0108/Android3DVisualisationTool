@@ -6,7 +6,7 @@ package sg.edu.nus.comp.android3dvisualisationtool.app.configuration;
 public interface Constants {
 
     static final String TITLE = "3D Visualisation Tool";
-    static final double DEFAULT_CAMERA_DISTANCE = 25;
+    static final double DEFAULT_CAMERA_DISTANCE = 35;
     static final double DEFAULT_FIELD_OF_VIEW = 30;
     static final double DEFAULT_MAX_ABS_COORIDINATE = 10;
     static final double DEFAULT_PRECISION = 0.05;
