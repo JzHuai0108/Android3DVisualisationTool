@@ -7,10 +7,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+
 /**
  * Created by panlong on 6/6/14.
  */
-public class GLES20SurfaceView extends GLSurfaceView {
+public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private static int NONE = 0;
     private static int ROTATE = 1;
     private static int ZOOM = 2;
@@ -20,6 +23,7 @@ public class GLES20SurfaceView extends GLSurfaceView {
     private float scaleFactor = 1;
     private Context context;
     private int mode = NONE;
+    private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
 
     public GLES20SurfaceView(Context context) {
         super(context);
@@ -47,6 +51,25 @@ public class GLES20SurfaceView extends GLSurfaceView {
 
         //set up pinch gesture
         detector = new ScaleGestureDetector(getContext(), new ScaleListener());
+
+        Thread listenCheckBox = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                while (true) {
+                    try {
+                        if (NavigationDrawerFragment.getSetOrigin() != isSetToOrigin) {
+                            isSetToOrigin = !isSetToOrigin;
+                            requestRender();
+                        }
+                        Thread.sleep(DEFAULT_SLEEP_TIME);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        listenCheckBox.start();
     }
 
     private float mPreviousX;
