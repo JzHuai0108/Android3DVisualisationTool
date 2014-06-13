@@ -41,6 +41,8 @@ public class Points implements Constants{
     private final int vertexCount;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
+    private boolean prevSetOrigin = false;
+
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
 
     /**
@@ -66,9 +68,7 @@ public class Points implements Constants{
                 "  gl_PointSize = " + radius * scaleFactor * 5 + ";" +
                 "}";
 
-        generateCoordsArray();
-        initBuffer();
-        prepareProgram();
+        preSetup();
     }
 
     private void generateCoordsArray() {
@@ -121,6 +121,12 @@ public class Points implements Constants{
         vertexBuffer.position(0);
     }
 
+    private void preSetup(){
+        generateCoordsArray();
+        initBuffer();
+        prepareProgram();
+    }
+
     /**
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *
@@ -128,6 +134,11 @@ public class Points implements Constants{
      * this shape.
      */
     public void draw(float[] mvpMatrix) {
+        if (NavigationDrawerFragment.getSetOrigin() != prevSetOrigin) {
+            preSetup();
+            prevSetOrigin = NavigationDrawerFragment.getSetOrigin();
+        }
+
         // Add program to OpenGL environment
         GLES20.glUseProgram(mProgram);
 
