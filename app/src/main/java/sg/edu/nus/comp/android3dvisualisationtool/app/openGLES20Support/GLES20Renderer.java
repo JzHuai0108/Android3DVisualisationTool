@@ -50,6 +50,10 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             // Set the background frame color
             GLES20.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 
+            mRotationMatrix = sg.edu.nus.comp.android3dvisualisationtool.app.util.Matrix.identity();
+            Matrix.rotateM(mRotationMatrix, 0, DEFAULT_CAMERA_ANGLE_X, 1, 0, 0);
+            Matrix.rotateM(mRotationMatrix, 0, DEFAULT_CAMERA_ANGLE_Y, 0, 1, 0);
+
             DataReader dr = new DataReader(context, "data.pcd");
             List<Point> lstPoint = dr.getPoints();
             mPoints = new Points(lstPoint);
