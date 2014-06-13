@@ -1,16 +1,17 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
-import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
-import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 /**
  * Created by panlong on 6/6/14.
@@ -31,8 +32,8 @@ public class Points implements Constants{
     private int mPositionHandle;
     private int mColorHandle;
     private int mMVPMatrixHandle;
-    private double radius;
-    private double scaleFactor;
+    private float radius;
+    private float scaleFactor;
 
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
@@ -52,8 +53,8 @@ public class Points implements Constants{
         vertexCount = lstPoints.size();
         pointsList = lstPoints;
         sc = new ScaleConfiguration(pointsList, DEFAULT_MAX_ABS_COORIDINATE);
-        radius = sc.getRadius();
-        scaleFactor = sc.getScaleFactor();
+        radius = (float) sc.getRadius();
+        scaleFactor = (float) sc.getScaleFactor();
 
         vertexShaderCode =
         // This matrix member variable provides a hook to manipulate
@@ -175,4 +176,24 @@ public class Points implements Constants{
         GLES20.glDisableVertexAttribArray(mPositionHandle);
     }
 
+    public float getRadius() {
+        if (radius > 0)
+            return radius;
+        else if (sc != null) {
+            radius = (float) sc.getRadius();
+            if (radius > 0)
+               return radius;
+        }
+            return -1;
+    }
+
+    public void setRadius(float newRadius) {
+        if (newRadius > 0) {
+            radius = newRadius;
+            initBuffer();
+            prepareProgram();
+        }
+        else
+            return;
+    }
 }

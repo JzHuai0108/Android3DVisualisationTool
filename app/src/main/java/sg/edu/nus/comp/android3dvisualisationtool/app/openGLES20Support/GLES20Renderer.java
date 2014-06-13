@@ -4,13 +4,14 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
+
+import java.util.List;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 import sg.edu.nus.comp.android3dvisualisationtool.app.util.VirtualSphere;
-
-import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -29,8 +30,14 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private float[] mViewMatrix = new float[16];
     private float[] mRotationMatrix = sg.edu.nus.comp.android3dvisualisationtool.app.util.Matrix.identity();
 
-    private float cameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
-    private float mAngle;
+    private float cameraDistance = (float) DEFAULT_CAMERA_DISTANCE;
+    private float cameraFieldOfView = (float) DEFAULT_FIELD_OF_VIEW;
+    private float near = (float) DEFAULT_CAMERA_NEAR_CLIP;
+    private float far = (float) DEFAULT_CAMERA_FAR_CLIP;
+    private float lookAtX = (float) DEFAULT_LOOK_AT_POINT_X;
+    private float lookAtY = (float) DEFAULT_LOOK_AT_POINT_Y;
+    private float radius = 0;
+
     private Context context;
 
     public GLES20Renderer(Context context) {
@@ -46,6 +53,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             DataReader dr = new DataReader(context, "data.pcd");
             List<Point> lstPoint = dr.getPoints();
             mPoints = new Points(lstPoint);
+            radius = mPoints.getRadius();
         } else {
             // Adjust the viewport based on geometry changes,
             // such as screen rotation
@@ -55,9 +63,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
             // this projection matrix is applied to object coordinates
             // in the onDrawFrame() method
-            float near = 0.1f;
-            float far = 1000.0f;
-            Matrix.perspectiveM(mProjectionMatrix, 0, (float)DEFAULT_FIELD_OF_VIEW, ratio, near, far);
+            Matrix.perspectiveM(mProjectionMatrix, 0, cameraFieldOfView, ratio, near, far);
         }
         setupVS(width, height);
     }
@@ -75,8 +81,6 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         float centerY = 0f;
         float centerZ = cameraDistance;
 
-        float lookAtX = 0f;
-        float lookAtY = 0f;
         float lookAtZ = 0f;
 
         float lookUpX = 0f;
@@ -207,4 +211,31 @@ public class GLES20Renderer extends GLRenderer implements Constants {
      */
     public void setCameraDistance(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE / scale; };
 
+    /**
+     * @param deltaX - camera look at point shift distance on x axis
+     * @param deltaY - camera look at point shift distance on y axis
+     * shift camera look point by (deltaX, deltaY)
+     */
+    public void shiftCameraLookAtPoint(int deltaX, int deltaY) {
+        lookAtX += deltaX;
+        lookAtY += deltaY;
+    }
+
+    public float getRadius() {
+        if (radius > 0)
+            return radius;
+        else if (mPoints != null) {
+            radius = mPoints.getRadius();
+            if (radius > 0)
+                return radius;
+        }
+        return -1;
+    }
+
+    public void setRadius(float newRadius) {
+        if (newRadius > 0) {
+            radius = newRadius;
+            mPoints.setRadius(newRadius);
+        }
+    }
 }
