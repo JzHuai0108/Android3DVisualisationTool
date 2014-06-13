@@ -36,6 +36,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private float far = (float) DEFAULT_CAMERA_FAR_CLIP;
     private float lookAtX = (float) DEFAULT_LOOK_AT_POINT_X;
     private float lookAtY = (float) DEFAULT_LOOK_AT_POINT_Y;
+    private float radius = 0;
 
     private Context context;
 
@@ -52,6 +53,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             DataReader dr = new DataReader(context, "data.pcd");
             List<Point> lstPoint = dr.getPoints();
             mPoints = new Points(lstPoint);
+            radius = mPoints.getRadius();
         } else {
             // Adjust the viewport based on geometry changes,
             // such as screen rotation
@@ -209,4 +211,31 @@ public class GLES20Renderer extends GLRenderer implements Constants {
      */
     public void setCameraDistance(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE / scale; };
 
+    /**
+     * @param deltaX - camera look at point shift distance on x axis
+     * @param deltaY - camera look at point shift distance on y axis
+     * shift camera look point by (deltaX, deltaY)
+     */
+    public void shiftCameraLookAtPoint(int deltaX, int deltaY) {
+        lookAtX += deltaX;
+        lookAtY += deltaY;
+    }
+
+    public float getRadius() {
+        if (radius > 0)
+            return radius;
+        else if (mPoints != null) {
+            radius = mPoints.getRadius();
+            if (radius > 0)
+                return radius;
+        }
+        return -1;
+    }
+
+    public void setRadius(float newRadius) {
+        if (newRadius > 0) {
+            radius = newRadius;
+            mPoints.setRadius(newRadius);
+        }
+    }
 }
