@@ -1,7 +1,9 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
+import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public class Points implements Constants{
 
-    private final String vertexShaderCode;
+    private String vertexShaderCode;
 
     private final String fragmentShaderCode =
             "precision mediump float;" +
@@ -31,7 +33,7 @@ public class Points implements Constants{
     private int mPositionHandle;
     private int mColorHandle;
     private int mMVPMatrixHandle;
-    private float radius;
+    private static float radius;
     private float scaleFactor;
 
     // number of coordinates per vertex in this array
@@ -52,21 +54,8 @@ public class Points implements Constants{
         vertexCount = lstPoints.size();
         pointsList = lstPoints;
         sc = new ScaleConfiguration(pointsList, DEFAULT_MAX_ABS_COORIDINATE);
-        radius = (float) sc.getRadius();
+        radius = (float) (sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
         scaleFactor = (float) sc.getScaleFactor();
-
-        vertexShaderCode =
-        // This matrix member variable provides a hook to manipulate
-        // the coordinates of the objects that use this vertex shader
-        "uniform mat4 uMVPMatrix;" +
-                "attribute vec4 vPosition;" +
-                "void main() {" +
-                // the matrix must be included as a modifier of gl_Position
-                // Note that the uMVPMatrix factor *must be first* in order
-                // for the matrix multiplication product to be correct.
-                "  gl_Position = uMVPMatrix * vPosition;" +
-                "  gl_PointSize = " + radius * scaleFactor * 5 + ";" +
-                "}";
 
         preSetup();
     }
@@ -122,6 +111,19 @@ public class Points implements Constants{
     }
 
     private void preSetup(){
+        vertexShaderCode =
+            // This matrix member variable provides a hook to manipulate
+            // the coordinates of the objects that use this vertex shader
+            "uniform mat4 uMVPMatrix;" +
+            "attribute vec4 vPosition;" +
+            "void main() {" +
+            // the matrix must be included as a modifier of gl_Position
+            // Note that the uMVPMatrix factor *must be first* in order
+            // for the matrix multiplication product to be correct.
+            "  gl_Position = uMVPMatrix * vPosition;" +
+            "  gl_PointSize = " + radius + ";" +
+            "}";
+
         generateCoordsArray();
         initBuffer();
         prepareProgram();
@@ -138,6 +140,11 @@ public class Points implements Constants{
             preSetup();
             prevSetOrigin = NavigationDrawerFragment.getSetOrigin();
         }
+        if (radius != SliderFragment.getRadiusScale()*sc.getRadius()){
+            radius = (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
+            preSetup();
+        }
+
 
         // Add program to OpenGL environment
         GLES20.glUseProgram(mProgram);
@@ -186,13 +193,9 @@ public class Points implements Constants{
             return -1;
     }
 
-    public void setRadius(float newRadius) {
+    public static void setRadius(float newRadius) {
         if (newRadius > 0) {
             radius = newRadius;
-            initBuffer();
-            prepareProgram();
         }
-        else
-            return;
     }
 }

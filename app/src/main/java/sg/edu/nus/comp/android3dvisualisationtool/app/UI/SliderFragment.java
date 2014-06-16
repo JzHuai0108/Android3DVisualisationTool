@@ -35,6 +35,8 @@ public class SliderFragment extends DialogFragment {
     private TextView textView_curvature_precision;
     private double value_curvature_precision;
 
+    private static float radiusScale = 1.0f;
+
     public SliderFragment() {
         // Required empty public constructor
     }
@@ -48,7 +50,6 @@ public class SliderFragment extends DialogFragment {
         return builder.show();
     }
 
-    //
     private static double convertToTick(int progress){
         double output;
 
@@ -118,7 +119,7 @@ public class SliderFragment extends DialogFragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_point_radius = convertToTick(progress);
                 textView_point_radius.setText(String.format("Point Radius: %.2f", value_point_radius));
-
+                setRadiusScale((float)value_point_radius);
             }
 
             @Override
@@ -180,6 +181,14 @@ public class SliderFragment extends DialogFragment {
 
         public void onFragmentInteraction(Uri uri);
 
+    }
+
+    private void setRadiusScale(float scale) {
+        radiusScale = scale;
+    }
+
+    public static float getRadiusScale(){
+        return radiusScale;
     }
 
 }
