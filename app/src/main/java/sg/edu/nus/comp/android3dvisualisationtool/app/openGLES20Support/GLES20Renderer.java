@@ -36,6 +36,8 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private float far = (float) DEFAULT_CAMERA_FAR_CLIP;
     private float lookAtX = (float) DEFAULT_LOOK_AT_POINT_X;
     private float lookAtY = (float) DEFAULT_LOOK_AT_POINT_Y;
+    private int windowHeight;
+    private int windowWidth;
     private float radius = 0;
 
     private Context context;
@@ -69,7 +71,10 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             // in the onDrawFrame() method
             Matrix.perspectiveM(mProjectionMatrix, 0, cameraFieldOfView, ratio, near, far);
         }
+
         setupVS(width, height);
+        windowHeight = height;
+        windowWidth = width;
     }
 
     @Override
@@ -208,13 +213,31 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             }
         }
     }
-    
+
+    public float getCameraDistance() {
+        return cameraDistance;
+    }
+
+    public void setCameraDistance(float dis) {
+        if (dis != 0)
+            cameraDistance = dis;
+    }
+
     /**
      * @param scale
      * set new camera distance according to the scale passed from touch event
      */
-    public void setCameraDistance(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE / scale; };
+    public void setCameraDistanceByScale(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE / scale; };
 
+    public float getCameraFieldOfView() {
+        return cameraFieldOfView;
+    }
+
+    public void setCameraFieldOfView(float angle) {
+        if (angle > 0 && angle < 180) {
+            cameraFieldOfView = angle;
+        }
+    }
     /**
      * @param deltaX - camera look at point shift distance on x axis
      * @param deltaY - camera look at point shift distance on y axis
@@ -241,5 +264,13 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             radius = newRadius;
             mPoints.setRadius(newRadius);
         }
+    }
+
+    public int getWindowHeight() {
+        return windowHeight;
+    }
+
+    public int getWindowWidth() {
+        return windowWidth;
     }
 }
