@@ -7,6 +7,8 @@ import android.util.Log;
 
 import java.util.List;
 
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.axis.Axes;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
@@ -106,8 +108,11 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         // for the matrix multiplication product to be correct.
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
-        // Draw triangle
         mPoints.draw(scratch);
+
+        if (NavigationDrawerFragment.getShowAxes()) {
+            Axes.draw(scratch, (float) (2 * DEFAULT_MAX_ABS_COORIDINATE), 3 * radius);
+        }
     }
 
     public void setupVS(int w, int h) {
