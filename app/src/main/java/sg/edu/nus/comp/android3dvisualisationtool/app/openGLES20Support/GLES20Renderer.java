@@ -243,7 +243,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
      * @param deltaY - camera look at point shift distance on y axis
      * shift camera look point by (deltaX, deltaY)
      */
-    public void shiftCameraLookAtPoint(int deltaX, int deltaY) {
+    public void shiftCameraLookAtPoint(float deltaX, float deltaY) {
         lookAtX += deltaX;
         lookAtY += deltaY;
     }

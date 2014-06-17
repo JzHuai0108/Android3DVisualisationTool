@@ -19,6 +19,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private float scaleFactor = 1;
     private Context context;
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
+    private boolean isScaling = false;
 
     public GLES20SurfaceView(Context context) {
         super(context);
@@ -67,8 +68,8 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
         listenCheckBox.start();
     }
 
-    private float mPreviousX;
-    private float mPreviousY;
+    private float[] mPreviousX = new float[2];
+    private float[] mPreviousY = new float[2];
     private final int INVALID_POINTER_ID = -1;
     private int mActivePointerId = INVALID_POINTER_ID;
 
@@ -81,34 +82,57 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
 
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
-                final int pointerIndex = MotionEventCompat.getActionIndex(ev);
-                final float x = MotionEventCompat.getX(ev, pointerIndex);
-                final float y = MotionEventCompat.getY(ev, pointerIndex);
-
+                final float x = MotionEventCompat.getX(ev, 0);
+                final float y = MotionEventCompat.getY(ev, 0);
                 // Remember where we started (for dragging)
-                mPreviousX = x;
-                mPreviousY = y;
+                mPreviousX[0] = x;
+                mPreviousY[0] = y;
+
                 // Save the ID of this pointer (for dragging)
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+
                 break;
             }
 
             case MotionEvent.ACTION_MOVE: {
                 if (mActivePointerId != INVALID_POINTER_ID) {
-                    // Find the index of the active pointer and fetch its position
-                    final int pointerIndex =
-                            MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                    if (ev.getPointerCount() == 1) {
+                        // Find the index of the active pointer and fetch its position
+                        final float x = MotionEventCompat.getX(ev, 0);
+                        final float y = MotionEventCompat.getY(ev, 0);
 
-                    final float x = MotionEventCompat.getX(ev, pointerIndex);
-                    final float y = MotionEventCompat.getY(ev, pointerIndex);
+                        mRenderer.setRotation((int) mPreviousX[0], (int) mPreviousY[0], (int) x, (int) y);
 
-                    mRenderer.setRotation((int) mPreviousX, (int) mPreviousY, (int) x, (int) y);
+                        requestRender();
 
-                    requestRender();
+                        // Remember this touch position for the next move event
+                        mPreviousX[0] = x;
+                        mPreviousY[0] = y;
+                    } else if (ev.getPointerCount() >= 2) {
+                        final float x0 = MotionEventCompat.getX(ev, 0);
+                        final float y0 = MotionEventCompat.getY(ev, 0);
+                        final float x1 = MotionEventCompat.getX(ev, 1);
+                        final float y1 = MotionEventCompat.getY(ev, 1);
 
-                    // Remember this touch position for the next move event
-                    mPreviousX = x;
-                    mPreviousY = y;
+                        if ((x0 - mPreviousX[0]) * (x1 - mPreviousX[1])
+                                + (y0 - mPreviousY[0]) * (y1 - mPreviousY[1]) > 0) {
+                            isScaling = false;
+                            double scale = 1.0 / (mRenderer.getWindowWidth() / (2 * DEFAULT_MAX_ABS_COORIDINATE))
+                                    * (mRenderer.getCameraDistance() / DEFAULT_CAMERA_DISTANCE)
+                                    * (mRenderer.getCameraFieldOfView() / DEFAULT_FIELD_OF_VIEW);
+
+                            mRenderer.shiftCameraLookAtPoint((float) ((mPreviousX[0] - x0) * scale), (float) ((y0 - mPreviousY[0]) * scale));
+
+                            requestRender();
+                        } else {
+                            isScaling = true;
+                        }
+
+                        mPreviousX[0] = x0;
+                        mPreviousY[0] = y0;
+                        mPreviousX[1] = x1;
+                        mPreviousY[1] = y1;
+                    }
                 }
 
                 break;
@@ -125,23 +149,22 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
             }
 
             case MotionEvent.ACTION_POINTER_UP: {
-
                 final int pointerIndex = MotionEventCompat.getActionIndex(ev);
-                final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
-
-                if (pointerId == mActivePointerId) {
-                    // This was our active pointer going up. Choose a new
-                    // active pointer and adjust accordingly.
-                    final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-                    mPreviousX = MotionEventCompat.getX(ev, newPointerIndex);
-                    mPreviousY = MotionEventCompat.getY(ev, newPointerIndex);
-                    mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
-                }
+                if (pointerIndex == 0)
+                    mActivePointerId = INVALID_POINTER_ID;
                 break;
             }
 
             case MotionEvent.ACTION_POINTER_DOWN: {
-                mActivePointerId = INVALID_POINTER_ID;
+                if (ev.getPointerCount() >= 2) {
+                    mPreviousX[0] = MotionEventCompat.getX(ev, 0);
+                    mPreviousY[0] = MotionEventCompat.getY(ev, 0);
+                    mPreviousX[1] = MotionEventCompat.getX(ev, 1);
+                    mPreviousY[1] = MotionEventCompat.getY(ev, 1);
+
+                    mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+                }
+
                 break;
             }
         }
@@ -151,9 +174,11 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            scaleFactor *= detector.getScaleFactor();
-            mRenderer.setCameraDistance(scaleFactor);
-            requestRender();
+            if (isScaling) {
+                scaleFactor *= detector.getScaleFactor();
+                mRenderer.setCameraDistanceByScale(scaleFactor);
+                requestRender();
+            }
             return true;
         }
     }
