@@ -36,6 +36,7 @@ public class SliderFragment extends DialogFragment {
     private double value_curvature_precision;
 
     private static float radiusScale = 1.0f;
+    private static float curvature = 0.5f;
 
     public SliderFragment() {
         // Required empty public constructor
@@ -141,7 +142,7 @@ public class SliderFragment extends DialogFragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_curvature_precision = progress / 50.0;
                 textView_curvature_precision.setText("Curvature Precision: " + value_curvature_precision);
-
+                setCurvature((float)value_curvature_precision);
             }
 
             @Override
@@ -189,6 +190,14 @@ public class SliderFragment extends DialogFragment {
 
     public static float getRadiusScale(){
         return radiusScale;
+    }
+
+    private void setCurvature(float c) {
+        curvature = c;
+    }
+
+    public static float getCurvature(){
+        return curvature;
     }
 
 }

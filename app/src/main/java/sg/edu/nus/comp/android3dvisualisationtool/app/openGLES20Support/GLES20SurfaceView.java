@@ -24,7 +24,9 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private Context context;
     private int mode = NONE;
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
+
     private float prevRadius = 1.0f;
+    private float prevCurvature = 0.5f;
 
     public GLES20SurfaceView(Context context) {
         super(context);
@@ -65,6 +67,10 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                         }
                         if (SliderFragment.getRadiusScale() != prevRadius){
                             prevRadius = SliderFragment.getRadiusScale();
+                            requestRender();
+                        }
+                        if (SliderFragment.getCurvature() != prevCurvature){
+                            prevCurvature = SliderFragment.getCurvature();
                             requestRender();
                         }
 
