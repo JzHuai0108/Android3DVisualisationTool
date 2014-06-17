@@ -11,11 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.R;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 
 
-public class SliderFragment extends DialogFragment {
+public class SliderFragment extends DialogFragment implements Constants {
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,6 +37,8 @@ public class SliderFragment extends DialogFragment {
 
     private static float radiusScale = 1.0f;
     private static float curvature = 0.5f;
+    private static float cameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
+    private static float fieldOfView = (float)DEFAULT_FIELD_OF_VIEW;
 
     public SliderFragment() {
         // Required empty public constructor
@@ -78,6 +80,7 @@ public class SliderFragment extends DialogFragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_camera_distant = convertToTick(progress);
                 textView_camera_distant.setText(String.format("Camera Distant: %.2f", value_camera_distant));
+                setCameraDistance((float)value_camera_distant);
             }
 
             @Override
@@ -99,6 +102,7 @@ public class SliderFragment extends DialogFragment {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_field_of_view = convertToTick(progress);
                 textView_field_of_view.setText(String.format("Field of View: %.2f", value_field_of_view));
+                setFieldOfView((float)value_field_of_view);
             }
 
             @Override
@@ -184,6 +188,22 @@ public class SliderFragment extends DialogFragment {
 
     }
 
+    private void setCameraDistance(float scale) {
+        cameraDistance = scale * (float)DEFAULT_CAMERA_DISTANCE;
+    }
+
+    public static float getCameraDistance(){
+        return cameraDistance;
+    }
+
+    private void setFieldOfView(float scale) {
+        fieldOfView = scale * (float)DEFAULT_FIELD_OF_VIEW;
+    }
+
+    public static float getFieldOfView(){
+        return fieldOfView;
+    }
+
     private void setRadiusScale(float scale) {
         radiusScale = scale;
     }
@@ -199,5 +219,4 @@ public class SliderFragment extends DialogFragment {
     public static float getCurvature(){
         return curvature;
     }
-
 }
