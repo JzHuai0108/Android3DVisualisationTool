@@ -136,7 +136,7 @@ public class Points implements Constants{
             preSetup();
             prevSetOrigin = NavigationDrawerFragment.getSetOrigin();
         }
-        if (radius != SliderFragment.getRadiusScale()*sc.getRadius()){
+        if (radius != (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
             radius = (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
             preSetup();
         }
