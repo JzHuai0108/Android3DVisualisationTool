@@ -54,6 +54,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         if (isContextLost) {
             // Set the background frame color
             GLES20.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
+            GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
             mRotationMatrix = sg.edu.nus.comp.android3dvisualisationtool.app.util.Matrix.identity();
             Matrix.rotateM(mRotationMatrix, 0, DEFAULT_CAMERA_ANGLE_X, 1, 0, 0);
