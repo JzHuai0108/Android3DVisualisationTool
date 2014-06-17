@@ -9,7 +9,5 @@ This tool has been tested on Nexus 5 with Kitkat 4.4.3.
 
 ###Screen Shots
 ![](https://raw.githubusercontent.com/pan-long/Android3DVisualisationTool/master/img1.png)
-
 ![](https://raw.githubusercontent.com/pan-long/Android3DVisualisationTool/master/img2.png)
-
 ![](https://raw.githubusercontent.com/pan-long/Android3DVisualisationTool/master/img3.png) 
