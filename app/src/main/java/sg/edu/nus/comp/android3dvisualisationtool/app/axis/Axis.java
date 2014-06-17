@@ -27,23 +27,81 @@ public class Axis {
                     "  gl_FragColor = vColor;" +
                     "}";
 
-    private static FloatBuffer vertexBuffer;
-    private static int mProgram;
-    private static int mPositionHandle;
-    private static int mColorHandle;
-    private static int mMVPMatrixHandle;
+    private FloatBuffer vertexBuffer;
+    private int mProgram;
+    private int mPositionHandle;
+    private int mColorHandle;
+    private int mMVPMatrixHandle;
 
     // number of coordinates per vertex in this array
     private static final int COORDS_PER_VERTEX = 3;
-    private static float[] pointCoords = new float[36];
-    private static final int vertexCount = 12;
+    private static final int vertexCount = 6 * 3 * 2;
     private static final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
+    private float[] pointCoords = new float[108];
 
-    private static void generateCoordsArray(float length, float width, float height) {
+    private float mLength, mWidth, mHeight;
+    private float[] mColor;
 
+    public Axis(float length, float width, float height, float[] color) {
+        mLength = length;
+        mWidth = width;
+        mHeight = height;
+        mColor = color;
+
+        setUp();
     }
 
-    private static void prepareProgram() {
+    private void generateCoordsArray() {
+        float x = mLength / 2;
+        float y = mWidth / 2;
+        float z = mHeight / 2;
+
+        pointCoords = new float[] {
+            x, -y, -z,
+                x, y, -z,
+                x, y, z,
+                x, -y, -z,
+                x, y, z,
+                x, -y, z,
+
+                -x, -y, -z,
+                -x, y, -z,
+                -x, y, z,
+                -x, -y, -z,
+                -x, y, z,
+                -x, -y, z,
+
+                x, y, -z,
+                -x, y, -z,
+                -x, y, z,
+                x, y, -z,
+                -x, y, z,
+                x, y, z,
+
+                x, -y, -z,
+                -x, -y, -z,
+                -x, -y, z,
+                x, -y, -z,
+                -x, -y, z,
+                x, -y, z,
+
+                x, -y, z,
+                x, y, z,
+                -x, y, z,
+                x, -y, z,
+                -x, y, z,
+                -x, -y, z,
+
+                x, -y, -z,
+                x, y, -z,
+                -x, y, -z,
+                x, -y, -z,
+                -x, y, -z,
+                -x, -y, -z
+        };
+    }
+
+    private void prepareProgram() {
         // prepare shaders and OpenGL program
         int vertexShader = GLES20Renderer.loadShader(
                 GLES20.GL_VERTEX_SHADER, vertexShaderCode);
@@ -56,7 +114,7 @@ public class Axis {
         GLES20.glLinkProgram(mProgram);                  // create OpenGL program executables
     }
 
-    private static void initBuffer() {
+    private void initBuffer() {
         // initialize vertex byte buffer for shape coordinates
         ByteBuffer bb = ByteBuffer.allocateDirect(
                 // (number of coordinate values * 4 bytes per float)
@@ -72,8 +130,8 @@ public class Axis {
         vertexBuffer.position(0);
     }
 
-    private static void setUp(float length, float width, float height){
-        generateCoordsArray(length, width, height);
+    private void setUp(){
+        generateCoordsArray();
         initBuffer();
         prepareProgram();
     }
@@ -82,13 +140,9 @@ public class Axis {
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *
      * @param mvpMatrix - The Model View Project matrix in which to draw
-     * @param length - The length of the axes
-     * @param width - The width of the axes
      * this shape.
      */
-    public static void draw(float[] mvpMatrix, float length, float width, float height, float[] color) {
-        setUp(length, width, height);
-
+    public void draw(float[] mvpMatrix) {
         // Add program to OpenGL environment
         GLES20.glUseProgram(mProgram);
 
@@ -108,7 +162,7 @@ public class Axis {
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
 
         // Set color for drawing the triangle
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+        GLES20.glUniform4fv(mColorHandle, 1, mColor, 0);
 
         // get handle to shape's transformation matrix
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");

@@ -25,8 +25,6 @@ public interface Constants {
     static final int DEFAULT_MINOR_TICK_SPACING = 5;
     static final int DEFAULT_NUMBER_OF_TICK = 7;
     static final int DEFAULT_NUMBER_OF_TICK_CURVATURE = 6;
-    static final int DEFAULT_CYLINDER_SLICE = 16;
-    static final int DEFAULT_CYLINDER_STACK = 16;
     static final int DEFAULT_CAMERA_ANGLE_X = 30;
     static final int DEFAULT_CAMERA_ANGLE_Y = 20;
     static final boolean DEFAULT_IS_AXES_VISIBLE = true;

@@ -9,14 +9,11 @@ import java.util.List;
 
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.axis.Axes;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 import sg.edu.nus.comp.android3dvisualisationtool.app.util.VirtualSphere;
-
-import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -115,7 +112,8 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         mPoints.draw(scratch);
 
         if (NavigationDrawerFragment.getShowAxes()) {
-            Axes.draw(scratch, (float) (2 * DEFAULT_MAX_ABS_COORIDINATE), 3 * radius);
+            Axes.draw(scratch, (float) (2 * DEFAULT_MAX_ABS_COORIDINATE), (float) (0.1 * (Math.pow(cameraDistance
+                                / DEFAULT_CAMERA_DISTANCE, 1.0 / 2) * (cameraFieldOfView / DEFAULT_FIELD_OF_VIEW))));
         }
     }
 
