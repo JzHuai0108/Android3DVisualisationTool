@@ -6,14 +6,15 @@ import android.app.ActivityManager;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20SurfaceView;
 
 
@@ -24,7 +25,7 @@ public class MainActivity extends Activity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private SliderFragment mDialog_fragment;
+    private SliderFragment mDialog_fragment = new SliderFragment();
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -32,6 +33,9 @@ public class MainActivity extends Activity
 
     // opengles view
     private GLES20SurfaceView mGLSurfaceView;
+
+    //window size
+    public static int width, height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,16 @@ public class MainActivity extends Activity
                 getFragmentManager().findFragmentById(R.id.drawer_layout);
 
         initialiseOpenGLESView();
+
+        calculateWindowSize();
+    }
+
+    private void calculateWindowSize() {
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        width = size.x;
+        height = size.y;
     }
 
     public void restoreActionBar() {
@@ -84,7 +98,7 @@ public class MainActivity extends Activity
             int id = item.getItemId();
             if (id == R.id.action_dialog) {
                 FragmentManager fm = getFragmentManager();
-                mDialog_fragment = new SliderFragment();
+                mDialog_fragment = mDialog_fragment == null ? new SliderFragment() : mDialog_fragment;
                 mDialog_fragment.show(fm, "fragment_dialog");
             }
             return super.onOptionsItemSelected(item);

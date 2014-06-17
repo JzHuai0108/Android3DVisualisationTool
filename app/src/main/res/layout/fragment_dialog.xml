@@ -13,8 +13,6 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
     android:layout_margin="10dp"
     android:layout_gravity="center">
 
-
-    //
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,7 +97,6 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
 
     </LinearLayout>
 
-    //
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -185,7 +182,6 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
 
     </LinearLayout>
 
-    //
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -199,7 +195,8 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
         android:id="@+id/seekBar3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:progress="30"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -271,7 +268,6 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
 
     </LinearLayout>
 
-    //
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -284,7 +280,8 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
     <SeekBar
         android:id="@+id/seekBar4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+		android:progress="25"/>
 
     <LinearLayout
         android:orientation="horizontal"

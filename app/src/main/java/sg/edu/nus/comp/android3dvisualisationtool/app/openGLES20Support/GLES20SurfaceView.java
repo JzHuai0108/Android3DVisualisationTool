@@ -6,8 +6,8 @@ import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 
 /**
@@ -20,6 +20,9 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private Context context;
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private boolean isScaling = false;
+
+    private float prevRadius = 1.0f;
+    private float prevCurvature = 0.5f;
 
     public GLES20SurfaceView(Context context) {
         super(context);
@@ -58,6 +61,15 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                             isSetToOrigin = !isSetToOrigin;
                             requestRender();
                         }
+                        if (SliderFragment.getRadiusScale() != prevRadius){
+                            prevRadius = SliderFragment.getRadiusScale();
+                            requestRender();
+                        }
+                        if (SliderFragment.getCurvature() != prevCurvature){
+                            prevCurvature = SliderFragment.getCurvature();
+                            requestRender();
+                        }
+
                         Thread.sleep(DEFAULT_SLEEP_TIME);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
