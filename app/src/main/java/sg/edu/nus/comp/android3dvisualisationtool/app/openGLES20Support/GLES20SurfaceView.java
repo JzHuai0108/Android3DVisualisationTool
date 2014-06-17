@@ -14,15 +14,10 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
  * Created by panlong on 6/6/14.
  */
 public class GLES20SurfaceView extends GLSurfaceView implements Constants{
-    private static int NONE = 0;
-    private static int ROTATE = 1;
-    private static int ZOOM = 2;
-
     private GLES20Renderer mRenderer = null;
-    ScaleGestureDetector detector;
+    private ScaleGestureDetector detector;
     private float scaleFactor = 1;
     private Context context;
-    private int mode = NONE;
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
 
     public GLES20SurfaceView(Context context) {
@@ -161,11 +156,5 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
             requestRender();
             return true;
         }
-    }
-
-    @Override
-    public void onResume (){
-        super.onResume();
-        requestRender();
     }
 }
