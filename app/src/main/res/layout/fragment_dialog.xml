@@ -25,7 +25,8 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
         android:id="@+id/seekBar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+		android:progress="30" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -110,7 +111,8 @@ tools:context="sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment"
         android:id="@+id/seekBar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+		android:progress="30"  />
 
     <LinearLayout
         android:orientation="horizontal"
