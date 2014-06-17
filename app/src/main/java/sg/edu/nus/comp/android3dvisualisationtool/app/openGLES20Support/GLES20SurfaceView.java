@@ -19,6 +19,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private float scaleFactor = 1;
     private Context context;
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
+    private boolean isAxesVisuable = DEFAULT_IS_AXES_VISIBLE;
     private boolean isScaling = false;
 
     private float prevRadius = 1.0f;
@@ -59,28 +60,38 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                 super.run();
                 while (true) {
                     try {
+                        boolean rerenderNeeded = false;
                         if (NavigationDrawerFragment.getSetOrigin() != isSetToOrigin) {
                             isSetToOrigin = !isSetToOrigin;
-                            requestRender();
+                            rerenderNeeded = true;
                         }
+
+                        if (NavigationDrawerFragment.getShowAxes() != isAxesVisuable) {
+                            isAxesVisuable = !isAxesVisuable;
+                            rerenderNeeded = true;
+                        }
+
                         if (SliderFragment.getRadiusScale() != prevRadius){
                             prevRadius = SliderFragment.getRadiusScale();
-                            requestRender();
+                            rerenderNeeded = true;
                         }
                         if (SliderFragment.getCurvature() != prevCurvature){
                             prevCurvature = SliderFragment.getCurvature();
-                            requestRender();
+                            rerenderNeeded = true;
                         }
                         if (SliderFragment.getCameraDistance() != prevCameraDistance){
                             prevCameraDistance = SliderFragment.getCameraDistance();
                             mRenderer.setCameraDistance(prevCameraDistance);
-                            requestRender();
+                            rerenderNeeded = true;
                         }
                         if (SliderFragment.getFieldOfView() != prevFieldOfView){
                             prevFieldOfView = SliderFragment.getFieldOfView();
                             mRenderer.setCameraFieldOfView(prevFieldOfView);
-                            requestRender();
+                            rerenderNeeded = true;
                         }
+
+                        if (rerenderNeeded)
+                            requestRender();
 
                         Thread.sleep(DEFAULT_SLEEP_TIME);
                     } catch (InterruptedException e) {
