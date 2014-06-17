@@ -4,14 +4,13 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
-
-import java.util.List;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 import sg.edu.nus.comp.android3dvisualisationtool.app.util.VirtualSphere;
+
+import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -39,6 +38,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private int windowHeight;
     private int windowWidth;
     private float radius = 0;
+    private float ratio;
 
     private Context context;
 
@@ -65,11 +65,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             // such as screen rotation
             GLES20.glViewport(0, 0, width, height);
 
-            float ratio = (float) width / height;
-
-            // this projection matrix is applied to object coordinates
-            // in the onDrawFrame() method
-            Matrix.perspectiveM(mProjectionMatrix, 0, cameraFieldOfView, ratio, near, far);
+            ratio = (float) width / height;
         }
 
         setupVS(width, height);
@@ -97,6 +93,10 @@ public class GLES20Renderer extends GLRenderer implements Constants {
         float lookUpZ = 0f;
 
         Matrix.setLookAtM(mViewMatrix, 0, centerX, centerY, centerZ, lookAtX, lookAtY, lookAtZ, lookUpX, lookUpY, lookUpZ);
+
+        // this projection matrix is applied to object coordinates
+        // in the onDrawFrame() method
+        Matrix.perspectiveM(mProjectionMatrix, 0, cameraFieldOfView, ratio, near, far);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);

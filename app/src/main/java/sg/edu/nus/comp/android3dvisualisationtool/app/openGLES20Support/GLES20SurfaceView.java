@@ -24,6 +24,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private float prevRadius = 1.0f;
     private float prevCurvature = 0.5f;
     private float prevCameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
+    private float prevFieldOfView = (float)DEFAULT_FIELD_OF_VIEW;
 
     public GLES20SurfaceView(Context context) {
         super(context);
@@ -73,6 +74,11 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                         if (SliderFragment.getCameraDistance() != prevCameraDistance){
                             prevCameraDistance = SliderFragment.getCameraDistance();
                             mRenderer.setCameraDistance(prevCameraDistance);
+                            requestRender();
+                        }
+                        if (SliderFragment.getFieldOfView() != prevFieldOfView){
+                            prevFieldOfView = SliderFragment.getFieldOfView();
+                            mRenderer.setCameraFieldOfView(prevFieldOfView);
                             requestRender();
                         }
 
