@@ -31,5 +31,6 @@ public interface Constants {
     static final boolean DEFAULT_IS_SET_TO_ORIGIN = false;
     static final boolean DEFAULT_IS_SELECTING_CURVATURE = false;
     static final boolean DEFAULT_IS_NORMAL_VECTOR_VISIBLE = false;
+    static final boolean DEFAULT_POINTS_CONTAINS_NORMAL_VECTOR = false;
     static final int DEFAULT_SLEEP_TIME = 100;
 }

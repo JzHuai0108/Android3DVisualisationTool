@@ -6,9 +6,11 @@ import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 
 /**
  * Created by panlong on 6/6/14.
@@ -20,6 +22,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private Context context;
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private boolean isAxesVisuable = DEFAULT_IS_AXES_VISIBLE;
+    private boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
     private boolean isScaling = false;
 
     private float prevRadius = 1.0f;
@@ -60,37 +63,46 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                 super.run();
                 while (true) {
                     try {
-                        boolean rerenderNeeded = false;
+                        boolean reRenderNeeded = false;
+
                         if (NavigationDrawerFragment.getSetOrigin() != isSetToOrigin) {
                             isSetToOrigin = !isSetToOrigin;
-                            rerenderNeeded = true;
+                            Points.setOrigin(isSetToOrigin);
+                            reRenderNeeded = true;
                         }
 
                         if (NavigationDrawerFragment.getShowAxes() != isAxesVisuable) {
                             isAxesVisuable = !isAxesVisuable;
-                            rerenderNeeded = true;
+
+                            reRenderNeeded = true;
+                        }
+
+                        if (NavigationDrawerFragment.getShowNormal() != isNormalVectorVisible) {
+                            isNormalVectorVisible = !isNormalVectorVisible;
+                            Points.setShowNormalVector(isNormalVectorVisible);
+                            reRenderNeeded = true;
                         }
 
                         if (SliderFragment.getRadiusScale() != prevRadius){
                             prevRadius = SliderFragment.getRadiusScale();
-                            rerenderNeeded = true;
+                            reRenderNeeded = true;
                         }
                         if (SliderFragment.getCurvature() != prevCurvature){
                             prevCurvature = SliderFragment.getCurvature();
-                            rerenderNeeded = true;
+                            reRenderNeeded = true;
                         }
                         if (SliderFragment.getCameraDistance() != prevCameraDistance){
                             prevCameraDistance = SliderFragment.getCameraDistance();
                             mRenderer.setCameraDistance(prevCameraDistance);
-                            rerenderNeeded = true;
+                            reRenderNeeded = true;
                         }
                         if (SliderFragment.getFieldOfView() != prevFieldOfView){
                             prevFieldOfView = SliderFragment.getFieldOfView();
                             mRenderer.setCameraFieldOfView(prevFieldOfView);
-                            rerenderNeeded = true;
+                            reRenderNeeded = true;
                         }
 
-                        if (rerenderNeeded)
+                        if (reRenderNeeded)
                             requestRender();
 
                         Thread.sleep(DEFAULT_SLEEP_TIME);

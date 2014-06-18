@@ -1,6 +1,13 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
@@ -8,12 +15,6 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -48,18 +49,23 @@ public class Points implements Constants{
     private final int vertexCount;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    private boolean prevSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
-    private boolean prevShowCurvature = DEFAULT_IS_SELECTING_CURVATURE;
+    private static boolean curvatureMode = DEFAULT_IS_SELECTING_CURVATURE;
+
+    private static boolean isSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
+    private static boolean isShowingCurvature = DEFAULT_IS_SELECTING_CURVATURE;
+    private static boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
+
+    private static boolean prevSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
+    private static boolean prevShowCurvature = DEFAULT_IS_SELECTING_CURVATURE;
+    private static boolean prevIsNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
+
+    private static boolean isPointContainsNormalVector = DEFAULT_POINTS_CONTAINS_NORMAL_VECTOR;
 
     private ArrayList<Point> normalPoints = null;
     private ArrayList<Point> curvaturePoints = null;
 
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
     float curvatureColor[] = {1f, 0f, 0f, 0f};
-
-    private boolean curvatureMode = false;
-    private boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
-    private boolean isPointContainsNormalVector = false;
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
@@ -235,9 +241,9 @@ public class Points implements Constants{
      * this shape.
      */
     public void draw(float[] mvpMatrix) {
-        if (NavigationDrawerFragment.getSetOrigin() != prevSetOrigin) {
+        if (isSetOrigin != prevSetOrigin) {
             preSetup();
-            prevSetOrigin = NavigationDrawerFragment.getSetOrigin();
+            prevSetOrigin = isSetOrigin;
         }
 
         if (NavigationDrawerFragment.getShowCurvature()){
@@ -351,5 +357,28 @@ public class Points implements Constants{
         if (scaleFactor > 0)
             return scaleFactor;
         return -1;
+    }
+
+    public static void setOrigin(boolean isSetToOrigin) {
+        prevSetOrigin = isSetOrigin;
+        isSetOrigin = isSetToOrigin;
+    }
+
+    public static boolean getIsSetOrigin() {
+        return isSetOrigin;
+    }
+
+    public static void setShowNormalVector(boolean showNormalVector) {
+        prevIsNormalVectorVisible = isNormalVectorVisible;
+        isNormalVectorVisible = showNormalVector;
+    }
+
+    public static boolean getIsNormalVectorVisible() {
+        return isNormalVectorVisible;
+    }
+
+    public static void setSelectingCurvature(boolean selectingCurvature) {
+        prevShowCurvature = isShowingCurvature;
+        isShowingCurvature = selectingCurvature;
     }
 }
