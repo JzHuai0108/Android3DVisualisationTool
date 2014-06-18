@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import sg.edu.nus.comp.android3dvisualisationtool.app.R;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 
 
 public class SliderFragment extends DialogFragment implements Constants {
@@ -124,6 +125,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_point_radius = convertToTick(progress);
                 textView_point_radius.setText(String.format("Point Radius: %.2f", value_point_radius));
+                Points.setRadiusScale((float)value_point_radius);
                 setRadiusScale((float)value_point_radius);
             }
 
@@ -146,7 +148,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_curvature_precision = progress / 50.0;
                 textView_curvature_precision.setText("Curvature Precision: " + value_curvature_precision);
-                setCurvature((float)value_curvature_precision);
+                Points.setCurvature((float)value_curvature_precision);
             }
 
             @Override
