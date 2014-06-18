@@ -88,8 +88,6 @@ public class Points implements Constants{
             }
         }
 
-        System.out.println(curvaturePoints.size());
-
         pointCoords = new float[normalPoints.size() * 3];
         curvaturePointCoords = new float[curvaturePoints.size() * 3];
 
@@ -236,14 +234,25 @@ public class Points implements Constants{
      */
     public void draw(float[] mvpMatrix) {
         if (NavigationDrawerFragment.getSetOrigin() != prevSetOrigin) {
-            preSetup();
             prevSetOrigin = NavigationDrawerFragment.getSetOrigin();
+            if (NavigationDrawerFragment.getShowCurvature()) {
+                generateCurvatureCoordsArray();
+                initBuffer();
+                prepareProgram();
+            } else {
+                preSetup();
+            }
         }
 
-        if (NavigationDrawerFragment.getShowCurvature()){
-            generateCurvatureCoordsArray();
-            initBuffer();
-            prepareProgram();
+        if (NavigationDrawerFragment.getShowCurvature() != prevShowCurvature) {
+            prevShowCurvature = NavigationDrawerFragment.getShowCurvature();
+            if (NavigationDrawerFragment.getShowCurvature()){
+                generateCurvatureCoordsArray();
+                initBuffer();
+                prepareProgram();
+            } else {
+                preSetup();
+            }
         }
 
         if (radius != (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
