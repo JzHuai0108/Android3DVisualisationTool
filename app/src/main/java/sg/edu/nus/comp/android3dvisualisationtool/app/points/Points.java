@@ -1,18 +1,17 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
+import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
+import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
-import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
-import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
-import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 /**
  * Created by panlong on 6/6/14.
@@ -54,6 +53,7 @@ public class Points implements Constants{
     private static boolean isShowingCurvature = DEFAULT_IS_SELECTING_CURVATURE;
     private static boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
 
+    private static float prevCuvature;
     private static boolean prevSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private static boolean prevShowCurvature = DEFAULT_IS_SELECTING_CURVATURE;
     private static boolean prevIsNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
@@ -253,6 +253,10 @@ public class Points implements Constants{
             setupShowCurvature();
         }
 
+        if (isShowingCurvature && curvature != prevCuvature) {
+            setupShowCurvature();
+        }
+
         if (radius != (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
             radius = (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
             preSetup();
@@ -330,6 +334,7 @@ public class Points implements Constants{
 
     public static void setCurvature(float c) {
         curvature = c;
+        prevCuvature = curvature;
     }
 
     public static void setRadius(float newRadius) {

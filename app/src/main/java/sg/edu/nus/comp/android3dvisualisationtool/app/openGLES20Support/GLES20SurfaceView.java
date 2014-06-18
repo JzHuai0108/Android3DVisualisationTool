@@ -23,6 +23,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private boolean isAxesVisuable = DEFAULT_IS_AXES_VISIBLE;
     private boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
+    private boolean isCurvatureVisible = DEFAULT_IS_SELECTING_CURVATURE;
     private boolean isScaling = false;
 
     private float prevRadius = 1.0f;
@@ -73,7 +74,12 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
 
                         if (NavigationDrawerFragment.getShowAxes() != isAxesVisuable) {
                             isAxesVisuable = !isAxesVisuable;
+                            reRenderNeeded = true;
+                        }
 
+                        if (NavigationDrawerFragment.getShowCurvature() != isCurvatureVisible){
+                            isCurvatureVisible = !isCurvatureVisible;
+                            Points.setSelectingCurvature(isCurvatureVisible);
                             reRenderNeeded = true;
                         }
 
@@ -89,6 +95,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                         }
                         if (SliderFragment.getCurvature() != prevCurvature){
                             prevCurvature = SliderFragment.getCurvature();
+                            Points.setCurvature(prevCurvature);
                             reRenderNeeded = true;
                         }
                         if (SliderFragment.getCameraDistance() != prevCameraDistance){

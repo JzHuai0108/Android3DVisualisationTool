@@ -10,18 +10,11 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.CheckBox;
 import android.widget.Toast;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.R;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
-import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -106,8 +99,8 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
             public void onClick(View v) {
                 if (((CheckBox) v).isChecked()){
                     Toast.makeText(getActivity(), "Show Curvature", Toast.LENGTH_LONG).show();
-                    Points.setSelectingCurvature(true);
-                } else Points.setSelectingCurvature(false);
+                    setShowCurvature(true);
+                } else setShowCurvature(false);
             }
         });
 

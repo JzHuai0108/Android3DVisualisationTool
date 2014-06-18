@@ -148,7 +148,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_curvature_precision = progress / DEFAULT_SLIDER_VALUE;
                 textView_curvature_precision.setText("Curvature Precision: " + value_curvature_precision);
-                Points.setCurvature((float)value_curvature_precision);
+                setCurvature((float)value_curvature_precision);
             }
 
             @Override
