@@ -1,6 +1,13 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
@@ -9,44 +16,39 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfigu
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by panlong on 6/6/14.
  */
 public class Points implements Constants{
 
-    private String vertexShaderCode;
+    private static String vertexShaderCode;
 
-    private final String fragmentShaderCode =
+    private static final String fragmentShaderCode =
             "precision mediump float;" +
                     "uniform vec4 vColor;" +
                     "void main() {" +
                     "  gl_FragColor = vColor;" +
                     "}";
+
     private static ScaleConfiguration sc;
-    private FloatBuffer vertexBuffer;
-    private FloatBuffer lineBuffer;
-    private FloatBuffer curvatureBuffer;
-    private int mProgram;
-    private int mPositionHandle;
-    private int mColorHandle;
-    private int mMVPMatrixHandle;
+    private static FloatBuffer vertexBuffer;
+    private static FloatBuffer lineBuffer;
+    private static FloatBuffer curvatureBuffer;
+    private static int mProgram;
+    private static int mPositionHandle;
+    private static int mColorHandle;
+    private static int mMVPMatrixHandle;
     private static float radius;
     private static float scaleFactor;
 
     // number of coordinates per vertex in this array
-    static final int COORDS_PER_VERTEX = 3;
-    static List<Point> pointsList;
-    static float[] pointCoords;
-    static float[] lineCoords;
-    static float[] curvaturePointCoords;
-    private final int vertexCount;
-    private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
+    private static final int COORDS_PER_VERTEX = 3;
+    private static List<Point> pointsList;
+    private static float[] pointCoords;
+    private static float[] lineCoords;
+    private static float[] curvaturePointCoords;
+    private static int vertexCount = 0;
+    private static final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
     private static boolean isSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private static boolean isShowingCurvature = DEFAULT_IS_SELECTING_CURVATURE;
@@ -58,8 +60,8 @@ public class Points implements Constants{
 
     private static boolean isPointContainsNormalVector = DEFAULT_POINTS_CONTAINS_NORMAL_VECTOR;
 
-    private ArrayList<Point> normalPoints = null;
-    private ArrayList<Point> curvaturePoints = null;
+    private static ArrayList<Point> normalPoints = null;
+    private static ArrayList<Point> curvaturePoints = null;
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
@@ -256,7 +258,6 @@ public class Points implements Constants{
             radius = (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
             preSetup();
         }
-
 
         // Add program to OpenGL environment
         GLES20.glUseProgram(mProgram);
