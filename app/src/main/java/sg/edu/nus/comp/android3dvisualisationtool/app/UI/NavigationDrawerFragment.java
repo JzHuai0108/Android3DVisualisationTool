@@ -129,7 +129,9 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
                 if (((CheckBox) v).isChecked()){
                     Toast.makeText(getActivity(), "Set Origin to Center of Mass", Toast.LENGTH_LONG).show();
                     setSetOrigin(true);
-                } else setSetOrigin(false);
+                } else {
+                    setSetOrigin(false);
+                }
             }
         });
     }

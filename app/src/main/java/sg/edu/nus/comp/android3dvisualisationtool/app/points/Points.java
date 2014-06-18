@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
-import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
-import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
@@ -40,6 +38,8 @@ public class Points implements Constants{
     private static int mMVPMatrixHandle;
     private static float radius;
     private static float scaleFactor;
+    private static float curvature;
+    private static float radiusScale = 1f;
 
     // number of coordinates per vertex in this array
     private static final int COORDS_PER_VERTEX = 3;
@@ -81,9 +81,9 @@ public class Points implements Constants{
         curvaturePoints = new ArrayList<Point>();
 
         for (Point p : pointsList) {
-            float curvature = p.getCurvature();
-            float selectedCurvature = SliderFragment.getCurvature();
-            if (curvature+DEFAULT_PRECISION>selectedCurvature && curvature-DEFAULT_PRECISION<selectedCurvature){
+            float c = p.getCurvature();
+            float selectedCurvature = curvature;
+            if (c+DEFAULT_PRECISION>selectedCurvature && c-DEFAULT_PRECISION<selectedCurvature){
                 curvaturePoints.add(p);
             } else {
                 normalPoints.add(p);
@@ -96,7 +96,7 @@ public class Points implements Constants{
         for (int i=0; i<normalPoints.size(); i++){
             Point p = normalPoints.get(i);
             double[] shift;
-            if (NavigationDrawerFragment.getSetOrigin()) {
+            if (isSetOrigin) {
                 shift = sc.getCenterOfMass();
             } else {
                 shift = new double[] {0, 0, 0};
@@ -109,7 +109,7 @@ public class Points implements Constants{
         for (int i=0; i<curvaturePoints.size(); i++){
             Point p = curvaturePoints.get(i);
             double[] shift;
-            if (NavigationDrawerFragment.getSetOrigin()) {
+            if (isSetOrigin) {
                 shift = sc.getCenterOfMass();
             } else {
                 shift = new double[] {0, 0, 0};
@@ -129,7 +129,7 @@ public class Points implements Constants{
                 Point p = pointsList.get(i);
                 double[] shift;
 
-                if (NavigationDrawerFragment.getSetOrigin()) {
+                if (isSetOrigin) {
                     shift = sc.getCenterOfMass();
                 } else {
                     shift = new double[] {0, 0, 0};
@@ -247,15 +247,14 @@ public class Points implements Constants{
     public void draw(float[] mvpMatrix) {
         if (isSetOrigin != prevSetOrigin) {
             setupShowCurvature();
-            prevSetOrigin = isSetOrigin;
         }
 
         if (isShowingCurvature != prevShowCurvature) {
             setupShowCurvature();
         }
 
-        if (radius != (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
-            radius = (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
+        if (radius != (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
+            radius = (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
             preSetup();
         }
 
@@ -323,6 +322,14 @@ public class Points implements Constants{
                return radius;
         }
             return -1;
+    }
+
+    public static void setRadiusScale(float scale) {
+        radiusScale = scale;
+    }
+
+    public static void setCurvature(float c) {
+        curvature = c;
     }
 
     public static void setRadius(float newRadius) {
