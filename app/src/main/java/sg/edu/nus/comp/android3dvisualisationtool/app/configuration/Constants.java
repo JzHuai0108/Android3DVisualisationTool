@@ -33,4 +33,6 @@ public interface Constants {
     static final boolean DEFAULT_IS_NORMAL_VECTOR_VISIBLE = false;
     static final boolean DEFAULT_POINTS_CONTAINS_NORMAL_VECTOR = false;
     static final int DEFAULT_SLEEP_TIME = 100;
+    static final float[] DEFAULT_COLOR = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
+    static final float[] CURVATURE_COLOR = {1f, 0f, 0f, 0f};
 }
