@@ -54,10 +54,6 @@ public class Points implements Constants{
     private ArrayList<Point> normalPoints = null;
     private ArrayList<Point> curvaturePoints = null;
 
-    float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
-    float curvatureColor[] = {1f, 0f, 0f, 0f};
-
-    private boolean curvatureMode = false;
     private boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
     private boolean isPointContainsNormalVector = false;
 
@@ -280,7 +276,7 @@ public class Points implements Constants{
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
 
         // Set color for drawing the triangle
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+        GLES20.glUniform4fv(mColorHandle, 1, DEFAULT_COLOR, 0);
 
         // get handle to shape's transformation matrix
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
@@ -308,7 +304,7 @@ public class Points implements Constants{
         }
 
         if (NavigationDrawerFragment.getShowCurvature()){
-            GLES20.glUniform4fv(mColorHandle, 1, curvatureColor, 0);
+            GLES20.glUniform4fv(mColorHandle, 1, CURVATURE_COLOR, 0);
             GLES20.glVertexAttribPointer(
                     mPositionHandle, COORDS_PER_VERTEX,
                     GLES20.GL_FLOAT, false,
@@ -318,25 +314,6 @@ public class Points implements Constants{
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
-    }
-
-    private void groupCurvaturePoints(float[] mvpMatrix){
-        if (normalPoints == null || curvaturePoints == null) {
-            normalPoints = new ArrayList<Point>();
-            curvaturePoints = new ArrayList<Point>();
-
-            for (Point p : pointsList) {
-                float curvature = p.getCurvature();
-                float selectedCurvature = SliderFragment.getCurvature();
-                if (curvature+DEFAULT_PRECISION>selectedCurvature || curvature-DEFAULT_PRECISION<selectedCurvature){
-                    curvaturePoints.add(p);
-                } else {
-                    normalPoints.add(p);
-                }
-            }
-        }
-
-        curvatureMode = true;
     }
 
     public static float getRadius() {
