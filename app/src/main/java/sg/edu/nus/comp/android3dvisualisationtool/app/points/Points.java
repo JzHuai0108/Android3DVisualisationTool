@@ -222,6 +222,16 @@ public class Points implements Constants{
         prepareProgram();
     }
 
+    private void setupShowCurvature(){
+        if (NavigationDrawerFragment.getShowCurvature()) {
+            generateCurvatureCoordsArray();
+            initBuffer();
+            prepareProgram();
+        } else {
+            preSetup();
+        }
+    }
+
     /**
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *
@@ -231,24 +241,12 @@ public class Points implements Constants{
     public void draw(float[] mvpMatrix) {
         if (NavigationDrawerFragment.getSetOrigin() != prevSetOrigin) {
             prevSetOrigin = NavigationDrawerFragment.getSetOrigin();
-            if (NavigationDrawerFragment.getShowCurvature()) {
-                generateCurvatureCoordsArray();
-                initBuffer();
-                prepareProgram();
-            } else {
-                preSetup();
-            }
+            setupShowCurvature();
         }
 
         if (NavigationDrawerFragment.getShowCurvature() != prevShowCurvature) {
             prevShowCurvature = NavigationDrawerFragment.getShowCurvature();
-            if (NavigationDrawerFragment.getShowCurvature()){
-                generateCurvatureCoordsArray();
-                initBuffer();
-                prepareProgram();
-            } else {
-                preSetup();
-            }
+            setupShowCurvature();
         }
 
         if (radius != (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
