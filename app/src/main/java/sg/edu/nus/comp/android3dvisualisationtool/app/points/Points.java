@@ -1,19 +1,18 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -44,10 +43,15 @@ public class Points implements Constants{
     private final int vertexCount;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    private boolean prevSetOrigin = false;
+    private boolean prevSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
+    private boolean prevShowCurvature = DEFAULT_IS_SELECTING_CURVATURE;
+
+    private ArrayList<Point> normalPoints = null;
+    private ArrayList<Point> curvaturePoints = null;
 
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
 
+    private boolean curvatureMode = false;
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
@@ -58,13 +62,13 @@ public class Points implements Constants{
         radius = (float) (sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
         scaleFactor = (float) sc.getScaleFactor();
 
-        preSetup();
+        preSetup(pointsList);
     }
 
-    private void generateCoordsArray() {
+    private void generateCoordsArray(List<Point> pList) {
         ArrayList<Float> mutableArrayOfPoint = new ArrayList<Float>();
 
-        for (Point p : pointsList) {
+        for (Point p : pList) {
             if (NavigationDrawerFragment.getSetOrigin()) {
                 double[] centerOfMass = sc.getCenterOfMass();
                 mutableArrayOfPoint.add(p.getX() * scaleFactor - (float)centerOfMass[0]);
@@ -111,7 +115,7 @@ public class Points implements Constants{
         vertexBuffer.position(0);
     }
 
-    private void preSetup(){
+    private void preSetup(List<Point> pList){
         vertexShaderCode =
             "uniform mat4 uMVPMatrix;" +
             "attribute vec4 vPosition;" +
@@ -120,7 +124,7 @@ public class Points implements Constants{
             "  gl_PointSize = " + radius + ";" +
             "}";
 
-        generateCoordsArray();
+        generateCoordsArray(pList);
         initBuffer();
         prepareProgram();
     }
@@ -133,12 +137,23 @@ public class Points implements Constants{
      */
     public void draw(float[] mvpMatrix) {
         if (NavigationDrawerFragment.getSetOrigin() != prevSetOrigin) {
-            preSetup();
+            preSetup(pointsList);
             prevSetOrigin = NavigationDrawerFragment.getSetOrigin();
+        }
+        if (curvatureMode){
+
+        }
+        else if (NavigationDrawerFragment.getShowCurvature()) {
+            prevShowCurvature = NavigationDrawerFragment.getShowCurvature();
+            groupCurvaturePoints(mvpMatrix);
+            return;
+        } else if (NavigationDrawerFragment.getShowCurvature() != prevShowCurvature){
+            preSetup(pointsList);
+            prevShowCurvature = NavigationDrawerFragment.getShowCurvature();
         }
         if (radius != (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
             radius = (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
-            preSetup();
+            preSetup(pointsList);
         }
 
 
@@ -176,6 +191,38 @@ public class Points implements Constants{
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
+    }
+
+    private void groupCurvaturePoints(float[] mvpMatrix){
+        if (normalPoints == null || curvaturePoints == null) {
+            normalPoints = new ArrayList<Point>();
+            curvaturePoints = new ArrayList<Point>();
+
+            for (Point p : pointsList) {
+                float curvature = p.getCurvature();
+                float selectedCurvature = SliderFragment.getCurvature();
+                if (curvature+DEFAULT_PRECISION>selectedCurvature || curvature-DEFAULT_PRECISION<selectedCurvature){
+                    curvaturePoints.add(p);
+                } else {
+                    normalPoints.add(p);
+                }
+            }
+        }
+
+        curvatureMode = true;
+
+        //draw these two group of points with different colors
+        float curvatureColor[] = { 1.0f, 0.0f, 0.0f, 0.0f };
+        color = curvatureColor;
+        preSetup(curvaturePoints);
+        draw(mvpMatrix);
+
+        float normalColor[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
+        color = normalColor;
+        preSetup(normalPoints);
+        draw(mvpMatrix);
+
+        curvatureMode = false;
     }
 
     public static float getRadius() {

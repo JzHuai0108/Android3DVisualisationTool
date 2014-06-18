@@ -46,11 +46,12 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    private CheckBox showAxesBox, showNormalBox, setOriginBox;
+    private CheckBox showAxesBox, showCurvatureBox, showNormalBox, setOriginBox;
 
     private static boolean showAxes = DEFAULT_IS_AXES_VISIBLE;
     private static boolean showNormal = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
     private static boolean setOrigin = DEFAULT_IS_SET_TO_ORIGIN;
+    private static boolean showCurvature = DEFAULT_IS_SELECTING_CURVATURE;
 
     public NavigationDrawerFragment() {
     }
@@ -95,6 +96,17 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
                     Toast.makeText(getActivity(), "Show Axes", Toast.LENGTH_LONG).show();
                     setShowAxes(true);
                 } else setShowAxes(false);
+            }
+        });
+
+        showCurvatureBox = (CheckBox)getActivity().findViewById(R.id.showCurvature);
+        showCurvatureBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()){
+                    Toast.makeText(getActivity(), "Show Curvature", Toast.LENGTH_LONG).show();
+                    setShowCurvature(true);
+                } else setShowCurvature(false);
             }
         });
 
@@ -258,6 +270,10 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
         showAxes = isChecked;
     }
 
+    private void setShowCurvature(boolean isChecked){
+        showCurvature = isChecked;
+    }
+
     private void setShowNormal(boolean isChecked){
         showNormal = isChecked;
     }
@@ -268,6 +284,10 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
 
     public static boolean getShowAxes(){
         return showAxes;
+    }
+
+    public static boolean getShowCurvature(){
+        return showCurvature;
     }
 
     public static boolean getShowNormal(){
