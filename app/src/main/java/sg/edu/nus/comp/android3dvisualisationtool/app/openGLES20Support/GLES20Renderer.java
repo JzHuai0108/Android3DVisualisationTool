@@ -4,9 +4,6 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
-
-import java.util.List;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.axis.Axes;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
@@ -14,6 +11,8 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 import sg.edu.nus.comp.android3dvisualisationtool.app.util.VirtualSphere;
+
+import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -60,7 +59,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             Matrix.rotateM(mRotationMatrix, 0, DEFAULT_CAMERA_ANGLE_X, 1, 0, 0);
             Matrix.rotateM(mRotationMatrix, 0, DEFAULT_CAMERA_ANGLE_Y, 0, 1, 0);
 
-            DataReader dr = new DataReader(context, "data.pcd");
+            DataReader dr = new DataReader(context, "data-curvature.pcd");
             List<Point> lstPoint = dr.getPoints();
             mPoints = new Points(lstPoint);
             radius = mPoints.getRadius();
