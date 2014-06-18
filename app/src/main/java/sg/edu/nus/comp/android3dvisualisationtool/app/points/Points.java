@@ -264,10 +264,8 @@ public class Points implements Constants{
         // get handle to vertex shader's vPosition member
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
 
-        // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
-        // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(
                 mPositionHandle, COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
@@ -276,7 +274,6 @@ public class Points implements Constants{
         // get handle to fragment shader's vColor member
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
 
-        // Set color for drawing the triangle
         GLES20.glUniform4fv(mColorHandle, 1, color, 0);
 
         // get handle to shape's transformation matrix
@@ -287,7 +284,6 @@ public class Points implements Constants{
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
         GLES20Renderer.checkGlError("glUniformMatrix4fv");
 
-        // Draw the triangle
         if (NavigationDrawerFragment.getShowCurvature()){
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, normalPoints.size());
         } else {
