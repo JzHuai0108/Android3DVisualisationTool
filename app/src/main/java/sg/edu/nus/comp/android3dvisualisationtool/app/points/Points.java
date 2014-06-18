@@ -218,6 +218,8 @@ public class Points implements Constants{
         GLES20.glDrawArrays(GLES20.GL_POINTS, 0, vertexCount);
 
         if (isNormalVectorVisible && isPointContainsNormalVector) {
+            GLES20.glLineWidth(radius / 2);
+
             GLES20.glVertexAttribPointer(
                     mPositionHandle, COORDS_PER_VERTEX,
                     GLES20.GL_FLOAT, false,
