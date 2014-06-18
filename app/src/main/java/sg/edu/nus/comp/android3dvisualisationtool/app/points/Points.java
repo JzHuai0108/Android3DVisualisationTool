@@ -52,13 +52,10 @@ public class Points implements Constants{
 
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
 
-//    private NormalVectors normalVectors = null;
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
     public Points(List<Point> lstPoints) {
-//        normalVectors = new NormalVectors(lstPoints);
-
         vertexCount = lstPoints.size();
         pointsList = lstPoints;
         sc = new ScaleConfiguration(pointsList, DEFAULT_MAX_ABS_COORIDINATE);
@@ -160,7 +157,6 @@ public class Points implements Constants{
                         "void main() {" +
                         "  gl_Position = uMVPMatrix * vPosition;" +
                         "  gl_PointSize = " + radius + ";" +
-//                        "  gl_LineWidth = " + radius / 2 + ";" +
                         "}";
 
         generateCoordsArray();
@@ -224,13 +220,11 @@ public class Points implements Constants{
                     mPositionHandle, COORDS_PER_VERTEX,
                     GLES20.GL_FLOAT, false,
                     vertexStride, vertexBuffer);
-            GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount);
+            GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount * 2);
         }
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
-
-//        normalVectors.draw(mvpMatrix);
     }
 
     public static float getRadius() {
