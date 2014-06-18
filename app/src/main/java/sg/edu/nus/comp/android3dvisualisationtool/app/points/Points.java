@@ -1,11 +1,6 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
-import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
-import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
-import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
-import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -13,40 +8,47 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
+import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
+import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
+import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
+
 /**
  * Created by panlong on 6/6/14.
  */
 public class Points implements Constants{
 
-    private String vertexShaderCode;
+    private static String vertexShaderCode;
 
-    private final String fragmentShaderCode =
+    private static final String fragmentShaderCode =
             "precision mediump float;" +
                     "uniform vec4 vColor;" +
                     "void main() {" +
                     "  gl_FragColor = vColor;" +
                     "}";
+
     private static ScaleConfiguration sc;
-    private FloatBuffer vertexBuffer;
-    private FloatBuffer lineBuffer;
-    private FloatBuffer curvatureBuffer;
-    private int mProgram;
-    private int mPositionHandle;
-    private int mColorHandle;
-    private int mMVPMatrixHandle;
+    private static FloatBuffer vertexBuffer;
+    private static FloatBuffer lineBuffer;
+    private static FloatBuffer curvatureBuffer;
+    private static int mProgram;
+    private static int mPositionHandle;
+    private static int mColorHandle;
+    private static int mMVPMatrixHandle;
     private static float radius;
     private static float scaleFactor;
     private static float curvature;
     private static float radiusScale = 1f;
 
     // number of coordinates per vertex in this array
-    static final int COORDS_PER_VERTEX = 3;
-    static List<Point> pointsList;
-    static float[] pointCoords;
-    static float[] lineCoords;
-    static float[] curvaturePointCoords;
-    private final int vertexCount;
-    private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
+    private static final int COORDS_PER_VERTEX = 3;
+    private static List<Point> pointsList;
+    private static float[] pointCoords;
+    private static float[] lineCoords;
+    private static float[] curvaturePointCoords;
+    private static int vertexCount = 0;
+    private static final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
     private static boolean isSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private static boolean isShowingCurvature = DEFAULT_IS_SELECTING_CURVATURE;
@@ -58,8 +60,8 @@ public class Points implements Constants{
 
     private static boolean isPointContainsNormalVector = DEFAULT_POINTS_CONTAINS_NORMAL_VECTOR;
 
-    private ArrayList<Point> normalPoints = null;
-    private ArrayList<Point> curvaturePoints = null;
+    private static ArrayList<Point> normalPoints = null;
+    private static ArrayList<Point> curvaturePoints = null;
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
@@ -256,17 +258,14 @@ public class Points implements Constants{
             preSetup();
         }
 
-
         // Add program to OpenGL environment
         GLES20.glUseProgram(mProgram);
 
         // get handle to vertex shader's vPosition member
         mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
 
-        // Enable a handle to the triangle vertices
         GLES20.glEnableVertexAttribArray(mPositionHandle);
 
-        // Prepare the triangle coordinate data
         GLES20.glVertexAttribPointer(
                 mPositionHandle, COORDS_PER_VERTEX,
                 GLES20.GL_FLOAT, false,
@@ -275,7 +274,6 @@ public class Points implements Constants{
         // get handle to fragment shader's vColor member
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
 
-        // Set color for drawing the triangle
         GLES20.glUniform4fv(mColorHandle, 1, DEFAULT_COLOR, 0);
 
         // get handle to shape's transformation matrix
@@ -286,7 +284,6 @@ public class Points implements Constants{
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
         GLES20Renderer.checkGlError("glUniformMatrix4fv");
 
-        // Draw the triangle
         if (isShowingCurvature){
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, normalPoints.size());
         } else {
