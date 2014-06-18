@@ -56,12 +56,12 @@ public class SliderFragment extends DialogFragment implements Constants {
     private static double convertToTick(int progress){
         double output;
 
-        if(progress - 30 < 0)
-            output = 1/((30 - progress)/10.0 + 1);
+        if(progress -  DEFAULT_SLIDER_VALUE< 0)
+            output = 1/((DEFAULT_SLIDER_VALUE - progress)/10.0 + 1);
         else if(progress == 0)
             output = 1;
         else
-            output = (progress - 30)/10.0 + 1;
+            output = (progress - DEFAULT_SLIDER_VALUE)/10.0 + 1;
 
         return output;
     }
@@ -73,7 +73,7 @@ public class SliderFragment extends DialogFragment implements Constants {
         View view_fragment = inflater.inflate(R.layout.fragment_dialog, container, false);
 
         seekBar_camera_distant = (SeekBar) view_fragment.findViewById(R.id.seekBar1);
-        seekBar_camera_distant.setMax(60); // the medium is 3 || [0...6] match [1/4...4]
+        seekBar_camera_distant.setMax(DEFAULT_SLIDER_MAX); // the medium is 3 || [0...6] match [1/4...4]
         textView_camera_distant = (TextView) view_fragment.findViewById(R.id.textView1);
         seekBar_camera_distant.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -95,7 +95,7 @@ public class SliderFragment extends DialogFragment implements Constants {
         });
 
         seekBar_field_of_view = (SeekBar)view_fragment.findViewById(R.id.seekBar2);
-        seekBar_field_of_view.setMax(60);
+        seekBar_field_of_view.setMax(DEFAULT_SLIDER_MAX);
         textView_field_of_view = (TextView) view_fragment.findViewById(R.id.textView2);
         seekBar_field_of_view.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -117,7 +117,7 @@ public class SliderFragment extends DialogFragment implements Constants {
         });
 
         seekBar_point_radius = (SeekBar)view_fragment.findViewById(R.id.seekBar3);
-        seekBar_point_radius.setMax(60);
+        seekBar_point_radius.setMax(DEFAULT_SLIDER_MAX);
         textView_point_radius = (TextView) view_fragment.findViewById(R.id.textView3);
         seekBar_point_radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -139,12 +139,12 @@ public class SliderFragment extends DialogFragment implements Constants {
         });
 
         seekBar_curvature_precision = (SeekBar)view_fragment.findViewById(R.id.seekBar4);
-        seekBar_curvature_precision.setMax(50);
+        seekBar_curvature_precision.setMax(DEFAULT_SLIDER_MAX);
         textView_curvature_precision = (TextView) view_fragment.findViewById(R.id.textView4);
         seekBar_curvature_precision.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                value_curvature_precision = progress / 50.0;
+                value_curvature_precision = progress / DEFAULT_SLIDER_VALUE;
                 textView_curvature_precision.setText("Curvature Precision: " + value_curvature_precision);
                 setCurvature((float)value_curvature_precision);
             }
