@@ -1,13 +1,6 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
@@ -15,6 +8,12 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -49,8 +48,6 @@ public class Points implements Constants{
     private final int vertexCount;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    private static boolean curvatureMode = DEFAULT_IS_SELECTING_CURVATURE;
-
     private static boolean isSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private static boolean isShowingCurvature = DEFAULT_IS_SELECTING_CURVATURE;
     private static boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
@@ -63,9 +60,6 @@ public class Points implements Constants{
 
     private ArrayList<Point> normalPoints = null;
     private ArrayList<Point> curvaturePoints = null;
-
-    float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
-    float curvatureColor[] = {1f, 0f, 0f, 0f};
 
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
@@ -93,8 +87,6 @@ public class Points implements Constants{
                 normalPoints.add(p);
             }
         }
-
-        System.out.println(curvaturePoints.size());
 
         pointCoords = new float[normalPoints.size() * 3];
         curvaturePointCoords = new float[curvaturePoints.size() * 3];
@@ -140,36 +132,36 @@ public class Points implements Constants{
                 } else {
                     shift = new double[] {0, 0, 0};
                 }
-                    pointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
-                    pointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
-                    pointCoords[3 * i + 2] = p.getZ() * scaleFactor - (float) shift[2];
+                pointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
+                pointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
+                pointCoords[3 * i + 2] = p.getZ() * scaleFactor - (float) shift[2];
 
-                    if (isNormalVectorVisible && (p.getType() == DataType.XYZNORMAL
-                        || p.getType() == DataType.XYZCNORMAL)) {
+                if (isNormalVectorVisible && (p.getType() == DataType.XYZNORMAL
+                    || p.getType() == DataType.XYZCNORMAL)) {
 
-                        isPointContainsNormalVector = true;
+                    isPointContainsNormalVector = true;
 
-                        lineCoords[6 * i] = (float) (p.getX() * scaleFactor - shift[0]);
-                        lineCoords[6 * i + 1] = (float) (p.getY() * scaleFactor - shift[1]);
-                        lineCoords[6 * i + 2] = (float) (p.getZ() * scaleFactor - shift[2]);
+                    lineCoords[6 * i] = (float) (p.getX() * scaleFactor - shift[0]);
+                    lineCoords[6 * i + 1] = (float) (p.getY() * scaleFactor - shift[1]);
+                    lineCoords[6 * i + 2] = (float) (p.getZ() * scaleFactor - shift[2]);
 
-                        float[] n = p.getNormal();
-                        float length = (float) Math.sqrt(n[0] * n[0] + n[1] * n[1]
-                                + n[2] * n[2]);
+                    float[] n = p.getNormal();
+                    float length = (float) Math.sqrt(n[0] * n[0] + n[1] * n[1]
+                            + n[2] * n[2]);
 
-                        lineCoords[6 * i + 3] = (float) (p.getX() * scaleFactor - shift[0] + n[0]
-                                / length * DEFAULT_NORMAL_VECTOR_LENGTH * radius
-                                / scaleFactor);
-                        lineCoords[6 * i + 4] = (float) (p.getY() * scaleFactor - shift[1] + n[1]
-                                / length
-                                * DEFAULT_NORMAL_VECTOR_LENGTH * radius
-                                / scaleFactor);
-                        lineCoords[6 * i + 5] = (float) (p.getZ()
-                                * scaleFactor - shift[2] + n[2] / length
-                                * DEFAULT_NORMAL_VECTOR_LENGTH
-                                * radius / scaleFactor);
+                    lineCoords[6 * i + 3] = (float) (p.getX() * scaleFactor - shift[0] + n[0]
+                            / length * DEFAULT_NORMAL_VECTOR_LENGTH * radius
+                            / scaleFactor);
+                    lineCoords[6 * i + 4] = (float) (p.getY() * scaleFactor - shift[1] + n[1]
+                            / length
+                            * DEFAULT_NORMAL_VECTOR_LENGTH * radius
+                            / scaleFactor);
+                    lineCoords[6 * i + 5] = (float) (p.getZ()
+                            * scaleFactor - shift[2] + n[2] / length
+                            * DEFAULT_NORMAL_VECTOR_LENGTH
+                            * radius / scaleFactor);
 
-                    }
+                }
             }
         }
     }
@@ -210,7 +202,7 @@ public class Points implements Constants{
             lineBuffer.position(0);
         }
 
-        if (NavigationDrawerFragment.getShowCurvature()) {
+        if (isShowingCurvature) {
             bb = ByteBuffer.allocateDirect(curvaturePointCoords.length * 4);
             bb.order(ByteOrder.nativeOrder());
             curvatureBuffer = bb.asFloatBuffer();
@@ -234,6 +226,16 @@ public class Points implements Constants{
         prepareProgram();
     }
 
+    private void setupShowCurvature(){
+        if (isShowingCurvature) {
+            generateCurvatureCoordsArray();
+            initBuffer();
+            prepareProgram();
+        } else {
+            preSetup();
+        }
+    }
+
     /**
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *
@@ -242,14 +244,12 @@ public class Points implements Constants{
      */
     public void draw(float[] mvpMatrix) {
         if (isSetOrigin != prevSetOrigin) {
-            preSetup();
+            setupShowCurvature();
             prevSetOrigin = isSetOrigin;
         }
 
-        if (NavigationDrawerFragment.getShowCurvature()){
-            generateCurvatureCoordsArray();
-            initBuffer();
-            prepareProgram();
+        if (isShowingCurvature != prevShowCurvature) {
+            setupShowCurvature();
         }
 
         if (radius != (float)(SliderFragment.getRadiusScale() * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
@@ -274,7 +274,7 @@ public class Points implements Constants{
         // get handle to fragment shader's vColor member
         mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
 
-        GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+        GLES20.glUniform4fv(mColorHandle, 1, DEFAULT_COLOR, 0);
 
         // get handle to shape's transformation matrix
         mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
@@ -284,7 +284,7 @@ public class Points implements Constants{
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
         GLES20Renderer.checkGlError("glUniformMatrix4fv");
 
-        if (NavigationDrawerFragment.getShowCurvature()){
+        if (isShowingCurvature){
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, normalPoints.size());
         } else {
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, vertexCount);
@@ -300,8 +300,8 @@ public class Points implements Constants{
             GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount * 2);
         }
 
-        if (NavigationDrawerFragment.getShowCurvature()){
-            GLES20.glUniform4fv(mColorHandle, 1, curvatureColor, 0);
+        if (isShowingCurvature){
+            GLES20.glUniform4fv(mColorHandle, 1, CURVATURE_COLOR, 0);
             GLES20.glVertexAttribPointer(
                     mPositionHandle, COORDS_PER_VERTEX,
                     GLES20.GL_FLOAT, false,
@@ -311,25 +311,6 @@ public class Points implements Constants{
 
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
-    }
-
-    private void groupCurvaturePoints(float[] mvpMatrix){
-        if (normalPoints == null || curvaturePoints == null) {
-            normalPoints = new ArrayList<Point>();
-            curvaturePoints = new ArrayList<Point>();
-
-            for (Point p : pointsList) {
-                float curvature = p.getCurvature();
-                float selectedCurvature = SliderFragment.getCurvature();
-                if (curvature+DEFAULT_PRECISION>selectedCurvature || curvature-DEFAULT_PRECISION<selectedCurvature){
-                    curvaturePoints.add(p);
-                } else {
-                    normalPoints.add(p);
-                }
-            }
-        }
-
-        curvatureMode = true;
     }
 
     public static float getRadius() {
