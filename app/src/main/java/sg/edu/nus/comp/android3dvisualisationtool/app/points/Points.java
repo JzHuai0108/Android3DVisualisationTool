@@ -1,13 +1,6 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.points;
 
 import android.opengl.GLES20;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
 import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
@@ -15,6 +8,12 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by panlong on 6/6/14.
@@ -48,8 +47,6 @@ public class Points implements Constants{
     static float[] curvaturePointCoords;
     private final int vertexCount;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
-
-    private static boolean curvatureMode = DEFAULT_IS_SELECTING_CURVATURE;
 
     private static boolean isSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private static boolean isShowingCurvature = DEFAULT_IS_SELECTING_CURVATURE;
@@ -135,36 +132,36 @@ public class Points implements Constants{
                 } else {
                     shift = new double[] {0, 0, 0};
                 }
-                    pointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
-                    pointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
-                    pointCoords[3 * i + 2] = p.getZ() * scaleFactor - (float) shift[2];
+                pointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
+                pointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
+                pointCoords[3 * i + 2] = p.getZ() * scaleFactor - (float) shift[2];
 
-                    if (isNormalVectorVisible && (p.getType() == DataType.XYZNORMAL
-                        || p.getType() == DataType.XYZCNORMAL)) {
+                if (isNormalVectorVisible && (p.getType() == DataType.XYZNORMAL
+                    || p.getType() == DataType.XYZCNORMAL)) {
 
-                        isPointContainsNormalVector = true;
+                    isPointContainsNormalVector = true;
 
-                        lineCoords[6 * i] = (float) (p.getX() * scaleFactor - shift[0]);
-                        lineCoords[6 * i + 1] = (float) (p.getY() * scaleFactor - shift[1]);
-                        lineCoords[6 * i + 2] = (float) (p.getZ() * scaleFactor - shift[2]);
+                    lineCoords[6 * i] = (float) (p.getX() * scaleFactor - shift[0]);
+                    lineCoords[6 * i + 1] = (float) (p.getY() * scaleFactor - shift[1]);
+                    lineCoords[6 * i + 2] = (float) (p.getZ() * scaleFactor - shift[2]);
 
-                        float[] n = p.getNormal();
-                        float length = (float) Math.sqrt(n[0] * n[0] + n[1] * n[1]
-                                + n[2] * n[2]);
+                    float[] n = p.getNormal();
+                    float length = (float) Math.sqrt(n[0] * n[0] + n[1] * n[1]
+                            + n[2] * n[2]);
 
-                        lineCoords[6 * i + 3] = (float) (p.getX() * scaleFactor - shift[0] + n[0]
-                                / length * DEFAULT_NORMAL_VECTOR_LENGTH * radius
-                                / scaleFactor);
-                        lineCoords[6 * i + 4] = (float) (p.getY() * scaleFactor - shift[1] + n[1]
-                                / length
-                                * DEFAULT_NORMAL_VECTOR_LENGTH * radius
-                                / scaleFactor);
-                        lineCoords[6 * i + 5] = (float) (p.getZ()
-                                * scaleFactor - shift[2] + n[2] / length
-                                * DEFAULT_NORMAL_VECTOR_LENGTH
-                                * radius / scaleFactor);
+                    lineCoords[6 * i + 3] = (float) (p.getX() * scaleFactor - shift[0] + n[0]
+                            / length * DEFAULT_NORMAL_VECTOR_LENGTH * radius
+                            / scaleFactor);
+                    lineCoords[6 * i + 4] = (float) (p.getY() * scaleFactor - shift[1] + n[1]
+                            / length
+                            * DEFAULT_NORMAL_VECTOR_LENGTH * radius
+                            / scaleFactor);
+                    lineCoords[6 * i + 5] = (float) (p.getZ()
+                            * scaleFactor - shift[2] + n[2] / length
+                            * DEFAULT_NORMAL_VECTOR_LENGTH
+                            * radius / scaleFactor);
 
-                    }
+                }
             }
         }
     }
@@ -205,7 +202,7 @@ public class Points implements Constants{
             lineBuffer.position(0);
         }
 
-        if (NavigationDrawerFragment.getShowCurvature()) {
+        if (isShowingCurvature) {
             bb = ByteBuffer.allocateDirect(curvaturePointCoords.length * 4);
             bb.order(ByteOrder.nativeOrder());
             curvatureBuffer = bb.asFloatBuffer();
@@ -230,7 +227,7 @@ public class Points implements Constants{
     }
 
     private void setupShowCurvature(){
-        if (NavigationDrawerFragment.getShowCurvature()) {
+        if (isShowingCurvature) {
             generateCurvatureCoordsArray();
             initBuffer();
             prepareProgram();
@@ -251,8 +248,7 @@ public class Points implements Constants{
             prevSetOrigin = isSetOrigin;
         }
 
-        if (NavigationDrawerFragment.getShowCurvature() != prevShowCurvature) {
-            prevShowCurvature = NavigationDrawerFragment.getShowCurvature();
+        if (isShowingCurvature != prevShowCurvature) {
             setupShowCurvature();
         }
 
@@ -292,7 +288,7 @@ public class Points implements Constants{
         GLES20Renderer.checkGlError("glUniformMatrix4fv");
 
         // Draw the triangle
-        if (NavigationDrawerFragment.getShowCurvature()){
+        if (isShowingCurvature){
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, normalPoints.size());
         } else {
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, vertexCount);
@@ -308,7 +304,7 @@ public class Points implements Constants{
             GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount * 2);
         }
 
-        if (NavigationDrawerFragment.getShowCurvature()){
+        if (isShowingCurvature){
             GLES20.glUniform4fv(mColorHandle, 1, CURVATURE_COLOR, 0);
             GLES20.glVertexAttribPointer(
                     mPositionHandle, COORDS_PER_VERTEX,
