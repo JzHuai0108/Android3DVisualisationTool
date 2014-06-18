@@ -223,7 +223,7 @@ public class Points implements Constants{
             GLES20.glVertexAttribPointer(
                     mPositionHandle, COORDS_PER_VERTEX,
                     GLES20.GL_FLOAT, false,
-                    vertexStride, vertexBuffer);
+                    vertexStride, lineBuffer);
             GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount);
         }
 
