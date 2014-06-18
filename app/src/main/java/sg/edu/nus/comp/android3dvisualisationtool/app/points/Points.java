@@ -5,7 +5,6 @@ import android.opengl.GLES20;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.util.ArrayList;
 import java.util.List;
 
 import sg.edu.nus.comp.android3dvisualisationtool.app.MainActivity;
@@ -13,6 +12,7 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragmen
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.ScaleConfiguration;
+import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataType;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Renderer;
 
 /**
@@ -30,6 +30,7 @@ public class Points implements Constants{
                     "}";
     private static ScaleConfiguration sc;
     private FloatBuffer vertexBuffer;
+    private FloatBuffer lineBuffer;
     private int mProgram;
     private int mPositionHandle;
     private int mColorHandle;
@@ -41,17 +42,23 @@ public class Points implements Constants{
     static final int COORDS_PER_VERTEX = 3;
     static List<Point> pointsList;
     static float[] pointCoords;
+    static float[] lineCoords;
     private final int vertexCount;
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
     private boolean prevSetOrigin = false;
+    private boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
+    private boolean isPointContainsNormalVector = false;
 
     float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 0.0f };
 
+//    private NormalVectors normalVectors = null;
     /**
      * Sets up the drawing object data for use in an OpenGL ES context.
      */
     public Points(List<Point> lstPoints) {
+//        normalVectors = new NormalVectors(lstPoints);
+
         vertexCount = lstPoints.size();
         pointsList = lstPoints;
         sc = new ScaleConfiguration(pointsList, DEFAULT_MAX_ABS_COORIDINATE);
@@ -62,24 +69,51 @@ public class Points implements Constants{
     }
 
     private void generateCoordsArray() {
-        ArrayList<Float> mutableArrayOfPoint = new ArrayList<Float>();
+        pointCoords = new float[vertexCount * 3];
+        lineCoords = new float[vertexCount * 6];
 
-        for (Point p : pointsList) {
-            if (NavigationDrawerFragment.getSetOrigin()) {
-                double[] centerOfMass = sc.getCenterOfMass();
-                mutableArrayOfPoint.add(p.getX() * scaleFactor - (float)centerOfMass[0]);
-                mutableArrayOfPoint.add(p.getY() * scaleFactor - (float)centerOfMass[1]);
-                mutableArrayOfPoint.add(p.getZ() * scaleFactor - (float)centerOfMass[2]);
-            } else {
-                mutableArrayOfPoint.add(p.getX() * scaleFactor);
-                mutableArrayOfPoint.add(p.getY() * scaleFactor);
-                mutableArrayOfPoint.add(p.getZ() * scaleFactor);
+        if (pointsList != null) {
+            for (int i = 0; i < vertexCount; i ++) {
+                Point p = pointsList.get(i);
+                double[] shift;
+
+                if (NavigationDrawerFragment.getSetOrigin()) {
+                    shift = sc.getCenterOfMass();
+                } else {
+                    shift = new double[] {0, 0, 0};
+                }
+                    pointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
+                    pointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
+                    pointCoords[3 * i + 2] = p.getZ() * scaleFactor - (float) shift[2];
+
+                    if (isNormalVectorVisible && (p.getType() == DataType.XYZNORMAL
+                        || p.getType() == DataType.XYZCNORMAL)) {
+
+                        isPointContainsNormalVector = true;
+
+                        lineCoords[6 * i] = (float) (p.getX() * scaleFactor - shift[0]);
+                        lineCoords[6 * i + 1] = (float) (p.getY() * scaleFactor - shift[1]);
+                        lineCoords[6 * i + 2] = (float) (p.getZ() * scaleFactor - shift[2]);
+
+                        float[] n = p.getNormal();
+                        float length = (float) Math.sqrt(n[0] * n[0] + n[1] * n[1]
+                                + n[2] * n[2]);
+
+                        lineCoords[6 * i + 3] = (float) (p.getX() * scaleFactor - shift[0] + n[0]
+                                / length * DEFAULT_NORMAL_VECTOR_LENGTH * radius
+                                / scaleFactor);
+                        lineCoords[6 * i + 4] = (float) (p.getY() * scaleFactor - shift[1] + n[1]
+                                / length
+                                * DEFAULT_NORMAL_VECTOR_LENGTH * radius
+                                / scaleFactor);
+                        lineCoords[6 * i + 5] = (float) (p.getZ()
+                                * scaleFactor - shift[2] + n[2] / length
+                                * DEFAULT_NORMAL_VECTOR_LENGTH
+                                * radius / scaleFactor);
+
+                    }
             }
         }
-
-        pointCoords = new float[mutableArrayOfPoint.size()];
-        for (int i = 0; i <mutableArrayOfPoint.size(); i ++)
-            pointCoords[i] = (mutableArrayOfPoint.get(i) == null) ? Float.NaN : mutableArrayOfPoint.get(i);
     }
 
     private void prepareProgram() {
@@ -109,16 +143,25 @@ public class Points implements Constants{
         vertexBuffer.put(pointCoords);
         // set the buffer to read the first coordinate
         vertexBuffer.position(0);
+
+        if (isNormalVectorVisible && isPointContainsNormalVector) {
+            bb = ByteBuffer.allocateDirect(lineCoords.length * 4);
+            bb.order(ByteOrder.nativeOrder());
+            lineBuffer = bb.asFloatBuffer();
+            lineBuffer.put(lineCoords);
+            lineBuffer.position(0);
+        }
     }
 
     private void preSetup(){
         vertexShaderCode =
-            "uniform mat4 uMVPMatrix;" +
-            "attribute vec4 vPosition;" +
-            "void main() {" +
-            "  gl_Position = uMVPMatrix * vPosition;" +
-            "  gl_PointSize = " + radius + ";" +
-            "}";
+                "uniform mat4 uMVPMatrix;" +
+                        "attribute vec4 vPosition;" +
+                        "void main() {" +
+                        "  gl_Position = uMVPMatrix * vPosition;" +
+                        "  gl_PointSize = " + radius + ";" +
+//                        "  gl_LineWidth = " + radius / 2 + ";" +
+                        "}";
 
         generateCoordsArray();
         initBuffer();
@@ -174,8 +217,18 @@ public class Points implements Constants{
         // Draw the triangle
         GLES20.glDrawArrays(GLES20.GL_POINTS, 0, vertexCount);
 
+        if (isNormalVectorVisible && isPointContainsNormalVector) {
+            GLES20.glVertexAttribPointer(
+                    mPositionHandle, COORDS_PER_VERTEX,
+                    GLES20.GL_FLOAT, false,
+                    vertexStride, vertexBuffer);
+            GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount);
+        }
+
         // Disable vertex array
         GLES20.glDisableVertexAttribArray(mPositionHandle);
+
+//        normalVectors.draw(mvpMatrix);
     }
 
     public static float getRadius() {
