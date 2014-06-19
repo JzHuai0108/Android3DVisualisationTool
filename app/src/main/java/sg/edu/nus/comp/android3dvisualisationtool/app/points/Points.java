@@ -255,9 +255,9 @@ public class Points implements Constants{
             prevShowCurvature = isShowingCurvature;
         }
 
-        if (isShowingCurvature && curvature != prevCuvature) {
+        if (curvature != prevCuvature) {
             setupShowCurvature();
-            curvature = prevCuvature;
+            prevCuvature = curvature;
         }
 
         if (radius != (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
@@ -371,7 +371,7 @@ public class Points implements Constants{
     }
 
     public static void setSelectingCurvature(boolean selectingCurvature) {
-        prevShowCurvature = isShowingCurvature;
+       // prevShowCurvature = isShowingCurvature;
         isShowingCurvature = selectingCurvature;
 
     }
