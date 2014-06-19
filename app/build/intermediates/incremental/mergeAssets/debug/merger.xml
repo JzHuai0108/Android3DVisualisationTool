@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/Users/tang/Dropbox/workspace/Android3DVisualisationTool/app/src/main/assets" >
+            <file
+                name="data-curvature.pcd"
+                path="/Users/tang/Dropbox/workspace/Android3DVisualisationTool/app/src/main/assets/data-curvature.pcd" />
+            <file
+                name="data.pcd"
+                path="/Users/tang/Dropbox/workspace/Android3DVisualisationTool/app/src/main/assets/data.pcd" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/Users/tang/Dropbox/workspace/Android3DVisualisationTool/app/src/debug/assets" />
+    </dataSet>
+
+</merger>
