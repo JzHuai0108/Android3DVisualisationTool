@@ -20,7 +20,7 @@ public interface Constants {
     static final double DEFAULT_NORMAL_VECTOR_LENGTH = 20;
     static final int DEFAULT_SLIDER_MIN = 0;
     static final int DEFAULT_SLIDER_MAX = 60;
-    static final int DEFAULT_SLIDER_VALUE = 30;
+    static final float DEFAULT_SLIDER_VALUE = 30f;
     static final int DEFAULT_MAJOR_TICK_SPACING = 10;
     static final int DEFAULT_MINOR_TICK_SPACING = 5;
     static final int DEFAULT_NUMBER_OF_TICK = 7;
