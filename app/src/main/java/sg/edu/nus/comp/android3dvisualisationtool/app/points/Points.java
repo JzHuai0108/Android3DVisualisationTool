@@ -247,14 +247,17 @@ public class Points implements Constants{
     public void draw(float[] mvpMatrix) {
         if (isSetOrigin != prevSetOrigin) {
             setupShowCurvature();
+            prevSetOrigin = isSetOrigin;
         }
 
         if (isShowingCurvature != prevShowCurvature) {
             setupShowCurvature();
+            prevShowCurvature = isShowingCurvature;
         }
 
         if (isShowingCurvature && curvature != prevCuvature) {
             setupShowCurvature();
+            curvature = prevCuvature;
         }
 
         if (radius != (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
@@ -370,5 +373,6 @@ public class Points implements Constants{
     public static void setSelectingCurvature(boolean selectingCurvature) {
         prevShowCurvature = isShowingCurvature;
         isShowingCurvature = selectingCurvature;
+
     }
 }
