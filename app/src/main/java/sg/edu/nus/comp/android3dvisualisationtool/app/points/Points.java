@@ -215,17 +215,20 @@ public class Points implements Constants{
     }
 
     private void preSetup(){
-        vertexShaderCode =
-                "uniform mat4 uMVPMatrix;" +
-                        "attribute vec4 vPosition;" +
-                        "void main() {" +
-                        "  gl_Position = uMVPMatrix * vPosition;" +
-                        "  gl_PointSize = " + radius + ";" +
-                        "}";
-
+        updateRadiusProgram();
         generateCoordsArray();
         initBuffer();
         prepareProgram();
+    }
+
+    private void updateRadiusProgram(){
+        vertexShaderCode =
+                "uniform mat4 uMVPMatrix;" +
+                "attribute vec4 vPosition;" +
+                "void main() {" +
+                "  gl_Position = uMVPMatrix * vPosition;" +
+                "  gl_PointSize = " + radius + ";" +
+                "}";
     }
 
     private void setupShowCurvature(){
@@ -262,7 +265,8 @@ public class Points implements Constants{
 
         if (radius != (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
             radius = (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
-            preSetup();
+            updateRadiusProgram();
+            setupShowCurvature();
         }
 
         // Add program to OpenGL environment
