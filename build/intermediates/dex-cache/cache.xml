@@ -2,7 +2,7 @@
 <pre-dex-items>
 
     <item
-        dex="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-1188904d1c6beee77a52c512c4cd3f6b8eb48158.jar"
+        dex="/Users/tang/Dropbox/workspace/Android3DVisualisationTool/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-1188904d1c6beee77a52c512c4cd3f6b8eb48158.jar"
         jar="/usr/local/Cellar/android-sdk/22.6.2/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
         jumboMode="false"
         revision="19.1.0"

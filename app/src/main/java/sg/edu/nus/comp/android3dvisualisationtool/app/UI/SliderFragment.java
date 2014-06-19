@@ -141,13 +141,13 @@ public class SliderFragment extends DialogFragment implements Constants {
         });
 
         seekBar_curvature_precision = (SeekBar)view_fragment.findViewById(R.id.seekBar4);
-        seekBar_curvature_precision.setMax(DEFAULT_SLIDER_MAX);
+        seekBar_curvature_precision.setMax(50);
         textView_curvature_precision = (TextView) view_fragment.findViewById(R.id.textView4);
         seekBar_curvature_precision.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                value_curvature_precision = progress / DEFAULT_SLIDER_VALUE;
-                textView_curvature_precision.setText("Curvature Precision: " + value_curvature_precision);
+                value_curvature_precision = progress / 50f;
+                textView_curvature_precision.setText(String.format("Curvature Precision: %.2f", value_curvature_precision));
                 setCurvature((float)value_curvature_precision);
             }
 
