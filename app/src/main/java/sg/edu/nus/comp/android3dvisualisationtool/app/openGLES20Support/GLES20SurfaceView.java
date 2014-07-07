@@ -19,9 +19,8 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
     private GLES20Renderer mRenderer = null;
     private ScaleGestureDetector detector;
     private float scaleFactor = 1;
-    private Context context;
     private boolean isSetToOrigin = DEFAULT_IS_SET_TO_ORIGIN;
-    private boolean isAxesVisuable = DEFAULT_IS_AXES_VISIBLE;
+    private boolean isAxesVisible = DEFAULT_IS_AXES_VISIBLE;
     private boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
     private boolean isCurvatureVisible = DEFAULT_IS_SELECTING_CURVATURE;
     private boolean isScaling = false;
@@ -33,14 +32,11 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
 
     public GLES20SurfaceView(Context context) {
         super(context);
+        configureRenderer();
     }
 
     public GLES20SurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
         configureRenderer();
     }
 
@@ -49,7 +45,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
         setEGLContextClientVersion(2);
 
         // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new GLES20Renderer(context);
+        mRenderer = new GLES20Renderer();
         setRenderer(mRenderer);
 
         // Render the view only when there is a change in the drawing data
@@ -72,8 +68,8 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                             reRenderNeeded = true;
                         }
 
-                        if (NavigationDrawerFragment.getShowAxes() != isAxesVisuable) {
-                            isAxesVisuable = !isAxesVisuable;
+                        if (NavigationDrawerFragment.getShowAxes() != isAxesVisible) {
+                            isAxesVisible = !isAxesVisible;
                             reRenderNeeded = true;
                         }
 

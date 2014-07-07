@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/Users/panlong/Documents/work/Intership/Summer%20Holiday%20Year2/Android3DVisualisationTool/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -9,7 +9,7 @@
     <dimen name="dialog_height">420dp</dimen>
     <dimen name="dialog_width">320dp</dimen>
     <dimen name="navigation_drawer_width">200dp</dimen>
-    <!-- From: file:/Users/panlong/Documents/work/Intership/Summer%20Holiday%20Year2/Android3DVisualisationTool/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="action_example">Example action</string>
@@ -23,7 +23,7 @@
     <string name="title_section1">Show Axes</string>
     <string name="title_section2">Show Normal Vectors</string>
     <string name="title_section3">Set Origin To Center</string>
-    <!-- From: file:/Users/panlong/Documents/work/Intership/Summer%20Holiday%20Year2/Android3DVisualisationTool/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
