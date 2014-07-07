@@ -54,7 +54,7 @@ public class Points implements Constants{
     private static boolean isShowingCurvature = DEFAULT_IS_SELECTING_CURVATURE;
     private static boolean isNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
 
-    private static float prevCuvature;
+    private static float prevCurvature;
     private static boolean prevSetOrigin = DEFAULT_IS_SET_TO_ORIGIN;
     private static boolean prevShowCurvature = DEFAULT_IS_SELECTING_CURVATURE;
     private static boolean prevIsNormalVectorVisible = DEFAULT_IS_NORMAL_VECTOR_VISIBLE;
@@ -259,9 +259,9 @@ public class Points implements Constants{
             prevShowCurvature = isShowingCurvature;
         }
 
-        if (curvature != prevCuvature) {
+        if (curvature != prevCurvature) {
             setupShowCurvature();
-            prevCuvature = curvature;
+            prevCurvature = curvature;
         }
 
         if (radius != (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
@@ -341,7 +341,7 @@ public class Points implements Constants{
     }
 
     public static void setCurvature(float c) {
-        prevCuvature = curvature;
+        prevCurvature = curvature;
         curvature = c;
     }
 
