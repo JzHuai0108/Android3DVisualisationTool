@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.R;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
@@ -38,8 +39,8 @@ public class SliderFragment extends DialogFragment implements Constants {
 
     private static float radiusScale = 1.0f;
     private static float curvature = 0.5f;
-    private static float cameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
-    private static float fieldOfView = (float)DEFAULT_FIELD_OF_VIEW;
+    private static float cameraDistance = (float) DEFAULT_CAMERA_DISTANCE;
+    private static float fieldOfView = (float) DEFAULT_FIELD_OF_VIEW;
 
     public SliderFragment() {
         // Required empty public constructor
@@ -50,19 +51,19 @@ public class SliderFragment extends DialogFragment implements Constants {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.settings)
-               .setTitle(R.string.dialog_title);
+                .setTitle(R.string.dialog_title);
         return builder.show();
     }
 
-    private static double convertToTick(int progress){
+    private static double convertToTick(int progress) {
         double output;
 
-        if(progress -  DEFAULT_SLIDER_VALUE< 0)
-            output = 1/((DEFAULT_SLIDER_VALUE - progress)/10.0 + 1);
-        else if(progress == 0)
+        if (progress - DEFAULT_SLIDER_VALUE < 0)
+            output = 1 / ((DEFAULT_SLIDER_VALUE - progress) / 10.0 + 1);
+        else if (progress == 0)
             output = 1;
         else
-            output = (progress - DEFAULT_SLIDER_VALUE)/10.0 + 1;
+            output = (progress - DEFAULT_SLIDER_VALUE) / 10.0 + 1;
 
         return output;
     }
@@ -81,7 +82,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_camera_distant = convertToTick(progress);
                 textView_camera_distant.setText(String.format("Camera Distant: %.2f", value_camera_distant));
-                setCameraDistance((float)value_camera_distant);
+                setCameraDistance((float) value_camera_distant);
             }
 
             @Override
@@ -95,7 +96,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             }
         });
 
-        seekBar_field_of_view = (SeekBar)view_fragment.findViewById(R.id.seekBar2);
+        seekBar_field_of_view = (SeekBar) view_fragment.findViewById(R.id.seekBar2);
         seekBar_field_of_view.setMax(DEFAULT_SLIDER_MAX);
         textView_field_of_view = (TextView) view_fragment.findViewById(R.id.textView2);
         seekBar_field_of_view.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -103,7 +104,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_field_of_view = convertToTick(progress);
                 textView_field_of_view.setText(String.format("Field of View: %.2f", value_field_of_view));
-                setFieldOfView((float)value_field_of_view);
+                setFieldOfView((float) value_field_of_view);
             }
 
             @Override
@@ -117,7 +118,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             }
         });
 
-        seekBar_point_radius = (SeekBar)view_fragment.findViewById(R.id.seekBar3);
+        seekBar_point_radius = (SeekBar) view_fragment.findViewById(R.id.seekBar3);
         seekBar_point_radius.setMax(DEFAULT_SLIDER_MAX);
         textView_point_radius = (TextView) view_fragment.findViewById(R.id.textView3);
         seekBar_point_radius.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -125,8 +126,8 @@ public class SliderFragment extends DialogFragment implements Constants {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_point_radius = convertToTick(progress);
                 textView_point_radius.setText(String.format("Point Radius: %.2f", value_point_radius));
-                Points.setRadiusScale((float)value_point_radius);
-                setRadiusScale((float)value_point_radius);
+                Points.setRadiusScale((float) value_point_radius);
+                setRadiusScale((float) value_point_radius);
             }
 
             @Override
@@ -140,7 +141,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             }
         });
 
-        seekBar_curvature_precision = (SeekBar)view_fragment.findViewById(R.id.seekBar4);
+        seekBar_curvature_precision = (SeekBar) view_fragment.findViewById(R.id.seekBar4);
         seekBar_curvature_precision.setMax(50);
         textView_curvature_precision = (TextView) view_fragment.findViewById(R.id.textView4);
         seekBar_curvature_precision.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -148,7 +149,7 @@ public class SliderFragment extends DialogFragment implements Constants {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 value_curvature_precision = progress / 50f;
                 textView_curvature_precision.setText(String.format("Curvature Precision: %.2f", value_curvature_precision));
-                setCurvature((float)value_curvature_precision);
+                setCurvature((float) value_curvature_precision);
             }
 
             @Override
@@ -191,18 +192,18 @@ public class SliderFragment extends DialogFragment implements Constants {
     }
 
     private void setCameraDistance(float scale) {
-        cameraDistance = scale * (float)DEFAULT_CAMERA_DISTANCE;
+        cameraDistance = scale * (float) DEFAULT_CAMERA_DISTANCE;
     }
 
-    public static float getCameraDistance(){
+    public static float getCameraDistance() {
         return cameraDistance;
     }
 
     private void setFieldOfView(float scale) {
-        fieldOfView = scale * (float)DEFAULT_FIELD_OF_VIEW;
+        fieldOfView = scale * (float) DEFAULT_FIELD_OF_VIEW;
     }
 
-    public static float getFieldOfView(){
+    public static float getFieldOfView() {
         return fieldOfView;
     }
 
@@ -210,7 +211,7 @@ public class SliderFragment extends DialogFragment implements Constants {
         radiusScale = scale;
     }
 
-    public static float getRadiusScale(){
+    public static float getRadiusScale() {
         return radiusScale;
     }
 
@@ -218,7 +219,7 @@ public class SliderFragment extends DialogFragment implements Constants {
         curvature = c;
     }
 
-    public static float getCurvature(){
+    public static float getCurvature() {
         return curvature;
     }
 }

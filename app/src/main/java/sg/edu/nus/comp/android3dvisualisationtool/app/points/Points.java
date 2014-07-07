@@ -17,7 +17,7 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Re
 /**
  * Created by panlong on 6/6/14.
  */
-public class Points implements Constants{
+public class Points implements Constants {
 
     private static String vertexShaderCode;
 
@@ -77,14 +77,14 @@ public class Points implements Constants{
         preSetup();
     }
 
-    private void generateCurvatureCoordsArray(){
+    private void generateCurvatureCoordsArray() {
         normalPoints = new ArrayList<Point>();
         curvaturePoints = new ArrayList<Point>();
 
         for (Point p : pointsList) {
             float c = p.getCurvature();
             float selectedCurvature = curvature;
-            if (c+DEFAULT_PRECISION>selectedCurvature && c-DEFAULT_PRECISION<selectedCurvature){
+            if (c + DEFAULT_PRECISION > selectedCurvature && c - DEFAULT_PRECISION < selectedCurvature) {
                 curvaturePoints.add(p);
             } else {
                 normalPoints.add(p);
@@ -94,26 +94,27 @@ public class Points implements Constants{
         pointCoords = new float[normalPoints.size() * 3];
         curvaturePointCoords = new float[curvaturePoints.size() * 3];
 
-        for (int i=0; i<normalPoints.size(); i++){
+        // use two arrays for points in the range of curvature selected and not in that range
+        for (int i = 0; i < normalPoints.size(); i++) {
             Point p = normalPoints.get(i);
             double[] shift;
             if (isSetOrigin) {
                 shift = sc.getCenterOfMass();
             } else {
-                shift = new double[] {0, 0, 0};
+                shift = new double[]{0, 0, 0};
             }
             pointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
             pointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
             pointCoords[3 * i + 2] = p.getZ() * scaleFactor - (float) shift[2];
         }
 
-        for (int i=0; i<curvaturePoints.size(); i++){
+        for (int i = 0; i < curvaturePoints.size(); i++) {
             Point p = curvaturePoints.get(i);
             double[] shift;
             if (isSetOrigin) {
                 shift = sc.getCenterOfMass();
             } else {
-                shift = new double[] {0, 0, 0};
+                shift = new double[]{0, 0, 0};
             }
             curvaturePointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
             curvaturePointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
@@ -126,21 +127,21 @@ public class Points implements Constants{
         lineCoords = new float[vertexCount * 6];
 
         if (pointsList != null) {
-            for (int i = 0; i < vertexCount; i ++) {
+            for (int i = 0; i < vertexCount; i++) {
                 Point p = pointsList.get(i);
                 double[] shift;
 
                 if (isSetOrigin) {
                     shift = sc.getCenterOfMass();
                 } else {
-                    shift = new double[] {0, 0, 0};
+                    shift = new double[]{0, 0, 0};
                 }
                 pointCoords[3 * i] = p.getX() * scaleFactor - (float) shift[0];
                 pointCoords[3 * i + 1] = p.getY() * scaleFactor - (float) shift[1];
                 pointCoords[3 * i + 2] = p.getZ() * scaleFactor - (float) shift[2];
 
                 if (isNormalVectorVisible && (p.getType() == DataType.XYZNORMAL
-                    || p.getType() == DataType.XYZCNORMAL)) {
+                        || p.getType() == DataType.XYZCNORMAL)) {
 
                     isPointContainsNormalVector = true;
 
@@ -215,24 +216,24 @@ public class Points implements Constants{
 
     }
 
-    private void preSetup(){
+    private void preSetup() {
         updateRadiusProgram();
         generateCoordsArray();
         initBuffer();
         prepareProgram();
     }
 
-    private void updateRadiusProgram(){
+    private void updateRadiusProgram() {
         vertexShaderCode =
                 "uniform mat4 uMVPMatrix;" +
-                "attribute vec4 vPosition;" +
-                "void main() {" +
-                "  gl_Position = uMVPMatrix * vPosition;" +
-                "  gl_PointSize = " + radius + ";" +
-                "}";
+                        "attribute vec4 vPosition;" +
+                        "void main() {" +
+                        "  gl_Position = uMVPMatrix * vPosition;" +
+                        "  gl_PointSize = " + radius + ";" +
+                        "}";
     }
 
-    private void setupShowCurvature(){
+    private void setupShowCurvature() {
         if (isShowingCurvature) {
             generateCurvatureCoordsArray();
             initBuffer();
@@ -246,7 +247,7 @@ public class Points implements Constants{
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *
      * @param mvpMatrix - The Model View Project matrix in which to draw
-     * this shape.
+     *                  this shape.
      */
     public void draw(float[] mvpMatrix) {
         if (isSetOrigin != prevSetOrigin) {
@@ -264,8 +265,8 @@ public class Points implements Constants{
             prevCurvature = curvature;
         }
 
-        if (radius != (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)){
-            radius = (float)(radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
+        if (radius != (float) (radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE)) {
+            radius = (float) (radiusScale * sc.getRadius() * MainActivity.width / DEFAULT_MAX_ABS_COORIDINATE);
             updateRadiusProgram();
             setupShowCurvature();
         }
@@ -296,7 +297,7 @@ public class Points implements Constants{
         GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, mvpMatrix, 0);
         GLES20Renderer.checkGlError("glUniformMatrix4fv");
 
-        if (isShowingCurvature){
+        if (isShowingCurvature) {
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, normalPoints.size());
         } else {
             GLES20.glDrawArrays(GLES20.GL_POINTS, 0, vertexCount);
@@ -312,7 +313,7 @@ public class Points implements Constants{
             GLES20.glDrawArrays(GLES20.GL_LINES, 0, vertexCount * 2);
         }
 
-        if (isShowingCurvature){
+        if (isShowingCurvature) {
             GLES20.glUniform4fv(mColorHandle, 1, CURVATURE_COLOR, 0);
             GLES20.glVertexAttribPointer(
                     mPositionHandle, COORDS_PER_VERTEX,
@@ -331,9 +332,9 @@ public class Points implements Constants{
         else if (sc != null) {
             radius = (float) sc.getRadius();
             if (radius > 0)
-               return radius;
+                return radius;
         }
-            return -1;
+        return -1;
     }
 
     public static void setRadiusScale(float scale) {
@@ -376,7 +377,7 @@ public class Points implements Constants{
     }
 
     public static void setSelectingCurvature(boolean selectingCurvature) {
-       // prevShowCurvature = isShowingCurvature;
+        // prevShowCurvature = isShowingCurvature;
         isShowingCurvature = selectingCurvature;
 
     }

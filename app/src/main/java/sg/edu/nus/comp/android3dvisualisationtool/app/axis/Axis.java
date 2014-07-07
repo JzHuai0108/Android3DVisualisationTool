@@ -56,8 +56,8 @@ public class Axis {
         float y = mWidth / 2;
         float z = mHeight / 2;
 
-        pointCoords = new float[] {
-            x, -y, -z,
+        pointCoords = new float[]{
+                x, -y, -z,
                 x, y, -z,
                 x, y, z,
                 x, -y, -z,
@@ -130,7 +130,7 @@ public class Axis {
         vertexBuffer.position(0);
     }
 
-    private void setUp(){
+    private void setUp() {
         generateCoordsArray();
         initBuffer();
         prepareProgram();
@@ -140,7 +140,7 @@ public class Axis {
      * Encapsulates the OpenGL ES instructions for drawing this shape.
      *
      * @param mvpMatrix - The Model View Project matrix in which to draw
-     * this shape.
+     *                  this shape.
      */
     public void draw(float[] mvpMatrix) {
         // Add program to OpenGL environment

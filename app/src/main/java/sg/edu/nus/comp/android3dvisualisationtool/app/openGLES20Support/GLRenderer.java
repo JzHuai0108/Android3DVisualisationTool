@@ -8,7 +8,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by panlong on 6/6/14.
  */
-public abstract class GLRenderer implements GLSurfaceView.Renderer{
+public abstract class GLRenderer implements GLSurfaceView.Renderer {
     private boolean isFirstDraw;
     private boolean isSurfaceCreated;
     private int mWidth;
@@ -50,5 +50,6 @@ public abstract class GLRenderer implements GLSurfaceView.Renderer{
     }
 
     public abstract void onCreate(int width, int height, boolean isContextLost);
+
     public abstract void onDrawFrame(boolean isFirstDraw);
 }

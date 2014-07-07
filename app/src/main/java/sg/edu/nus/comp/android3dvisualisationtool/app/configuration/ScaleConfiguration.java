@@ -1,14 +1,14 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.configuration;
 
-import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
-
 import java.util.Collections;
 import java.util.List;
+
+import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 
 /**
  * Created by panlong on 11/6/14.
  */
-public class ScaleConfiguration implements Constants{
+public class ScaleConfiguration implements Constants {
     private final double cameraDistance = DEFAULT_CAMERA_DISTANCE;
     private final double fieldOfView = DEFAULT_FIELD_OF_VIEW;
 

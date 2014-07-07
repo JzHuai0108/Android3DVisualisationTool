@@ -15,7 +15,7 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.points.Points;
 /**
  * Created by panlong on 6/6/14.
  */
-public class GLES20SurfaceView extends GLSurfaceView implements Constants{
+public class GLES20SurfaceView extends GLSurfaceView implements Constants {
     private GLES20Renderer mRenderer = null;
     private ScaleGestureDetector detector;
     private float scaleFactor = 1;
@@ -27,8 +27,8 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
 
     private float prevRadius = 1.0f;
     private float prevCurvature = 0.5f;
-    private float prevCameraDistance = (float)DEFAULT_CAMERA_DISTANCE;
-    private float prevFieldOfView = (float)DEFAULT_FIELD_OF_VIEW;
+    private float prevCameraDistance = (float) DEFAULT_CAMERA_DISTANCE;
+    private float prevFieldOfView = (float) DEFAULT_FIELD_OF_VIEW;
 
     public GLES20SurfaceView(Context context) {
         super(context);
@@ -73,7 +73,7 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                             reRenderNeeded = true;
                         }
 
-                        if (NavigationDrawerFragment.getShowCurvature() != isCurvatureVisible){
+                        if (NavigationDrawerFragment.getShowCurvature() != isCurvatureVisible) {
                             isCurvatureVisible = !isCurvatureVisible;
                             Points.setSelectingCurvature(isCurvatureVisible);
                             reRenderNeeded = true;
@@ -85,21 +85,21 @@ public class GLES20SurfaceView extends GLSurfaceView implements Constants{
                             reRenderNeeded = true;
                         }
 
-                        if (SliderFragment.getRadiusScale() != prevRadius){
+                        if (SliderFragment.getRadiusScale() != prevRadius) {
                             prevRadius = SliderFragment.getRadiusScale();
                             reRenderNeeded = true;
                         }
-                        if (SliderFragment.getCurvature() != prevCurvature){
+                        if (SliderFragment.getCurvature() != prevCurvature) {
                             prevCurvature = SliderFragment.getCurvature();
                             Points.setCurvature(prevCurvature);
                             reRenderNeeded = true;
                         }
-                        if (SliderFragment.getCameraDistance() != prevCameraDistance){
+                        if (SliderFragment.getCameraDistance() != prevCameraDistance) {
                             prevCameraDistance = SliderFragment.getCameraDistance();
                             mRenderer.setCameraDistance(prevCameraDistance);
                             reRenderNeeded = true;
                         }
-                        if (SliderFragment.getFieldOfView() != prevFieldOfView){
+                        if (SliderFragment.getFieldOfView() != prevFieldOfView) {
                             prevFieldOfView = SliderFragment.getFieldOfView();
                             mRenderer.setCameraFieldOfView(prevFieldOfView);
                             reRenderNeeded = true;

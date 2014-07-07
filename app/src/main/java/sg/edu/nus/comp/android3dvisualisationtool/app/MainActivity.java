@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
@@ -103,7 +104,7 @@ public class MainActivity extends Activity
                 mDialog_fragment.show(fm, "fragment_dialog");
             }
             return super.onOptionsItemSelected(item);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return super.onOptionsItemSelected(item);
         }

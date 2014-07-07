@@ -1,6 +1,5 @@
 package sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support;
 
-import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 import android.util.Log;
@@ -46,6 +45,8 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     @Override
     public void onCreate(int width, int height, boolean isContextLost) {
         if (isContextLost) {
+            // context is lost, we need to recreate everything
+
             // Set the background frame color
             GLES20.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
@@ -72,7 +73,6 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
     @Override
     public void onDrawFrame(boolean isFirstDraw) {
-
         float[] scratch = new float[16];
 
         // Draw background color
@@ -107,7 +107,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
         if (NavigationDrawerFragment.getShowAxes()) {
             Axes.draw(scratch, (float) (2 * DEFAULT_MAX_ABS_COORIDINATE), (float) (0.1 * (Math.pow(cameraDistance
-                                / DEFAULT_CAMERA_DISTANCE, 1.0 / 2) * (cameraFieldOfView / DEFAULT_FIELD_OF_VIEW))));
+                    / DEFAULT_CAMERA_DISTANCE, 1.0 / 2) * (cameraFieldOfView / DEFAULT_FIELD_OF_VIEW))));
         }
     }
 
@@ -119,15 +119,15 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
     /**
      * Utility method for compiling a OpenGL shader.
-     *
+     * <p/>
      * <p><strong>Note:</strong> When developing shaders, use the checkGlError()
      * method to debug shader coding errors.</p>
      *
-     * @param type - Vertex or fragment shader type.
+     * @param type       - Vertex or fragment shader type.
      * @param shaderCode - String containing the shader code.
      * @return - Returns an id for the shader.
      */
-    public static int loadShader(int type, String shaderCode){
+    public static int loadShader(int type, String shaderCode) {
 
         // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
         // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
@@ -143,7 +143,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     /**
      * Utility method for debugging OpenGL calls. Provide the name of the call
      * just after making it:
-     *
+     * <p/>
      * <pre>
      * mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
      * MyGLRenderer.checkGlError("glGetUniformLocation");</pre>
@@ -161,12 +161,13 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     }
 
     private float[] mouseMtx = new float[16];
+
     /**
      * @param previousX - x coordinate of previous position of touch event
      * @param previousY - y coordinate of previous position of touch event
-     * @param x - x coordinate of new position of touch event
-     * @param y - y coordinate of new position of touch event
-     * set new rotation matrix
+     * @param x         - x coordinate of new position of touch event
+     * @param y         - y coordinate of new position of touch event
+     *                  set new rotation matrix
      */
     public void setRotation(int previousX, int previousY, int x, int y) {
         vs.makeRotationMtx(new android.graphics.Point(previousX, previousY), new android.graphics.Point(x, y), cueCenter, cueRadius,
@@ -225,10 +226,11 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     }
 
     /**
-     * @param scale
-     * set new camera distance according to the scale passed from touch event
+     * @param scale set new camera distance according to the scale passed from touch event
      */
-    public void setCameraDistanceByScale(float scale) { cameraDistance = (float)DEFAULT_CAMERA_DISTANCE / scale; }
+    public void setCameraDistanceByScale(float scale) {
+        cameraDistance = (float) DEFAULT_CAMERA_DISTANCE / scale;
+    }
 
     public float getCameraFieldOfView() {
         return cameraFieldOfView;
@@ -239,10 +241,11 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             cameraFieldOfView = angle;
         }
     }
+
     /**
      * @param deltaX - camera look at point shift distance on x axis
      * @param deltaY - camera look at point shift distance on y axis
-     * shift camera look point by (deltaX, deltaY)
+     *               shift camera look point by (deltaX, deltaY)
      */
     public void shiftCameraLookAtPoint(float deltaX, float deltaY) {
         lookAtX += deltaX;

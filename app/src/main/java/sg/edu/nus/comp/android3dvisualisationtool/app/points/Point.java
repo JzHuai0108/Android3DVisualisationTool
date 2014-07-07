@@ -98,9 +98,10 @@ public class Point implements Comparable<Point> {
 
     public float[] getNormal() {
         if (normal == null)
-            normal = new float[] { this.normal_x, this.normal_y, this.normal_z };
+            normal = new float[]{this.normal_x, this.normal_y, this.normal_z};
         return normal;
     }
+
     public int[] parseRGB() {
         if (rgb == null && color != -1) {
             rgb = new int[3];
@@ -131,33 +132,33 @@ public class Point implements Comparable<Point> {
 
     private float[] getXYZCProperties() {
         if (properties == null)
-            properties = new float[] { this.x, this.y, this.z, this.curvature };
+            properties = new float[]{this.x, this.y, this.z, this.curvature};
         return properties;
     }
 
     private float[] getXYZCNORMALProperties() {
         if (properties == null)
-            properties = new float[] { this.x, this.y, this.z, this.curvature,
-                    this.color };
+            properties = new float[]{this.x, this.y, this.z, this.curvature,
+                    this.color};
         return properties;
     }
 
     private float[] getXYZProperties() {
         if (properties == null)
-            properties = new float[] { this.x, this.y, this.z };
+            properties = new float[]{this.x, this.y, this.z};
         return properties;
     }
 
     private float[] getXYZRGBProperties() {
         if (properties == null)
-            properties = new float[] { this.x, this.y, this.z, this.color };
+            properties = new float[]{this.x, this.y, this.z, this.color};
         return properties;
     }
 
     private float[] getXYZNORMALProperties() {
         if (properties == null)
-            properties = new float[] { this.x, this.y, this.z, this.normal_x,
-                    this.normal_y, this.normal_z };
+            properties = new float[]{this.x, this.y, this.z, this.normal_x,
+                    this.normal_y, this.normal_z};
         return properties;
     }
 

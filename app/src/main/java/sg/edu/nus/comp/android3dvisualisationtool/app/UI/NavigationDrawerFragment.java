@@ -10,9 +10,15 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
 import sg.edu.nus.comp.android3dvisualisationtool.app.R;
 import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
 
@@ -21,7 +27,7 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.configuration.Constants;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment implements Constants{
+public class NavigationDrawerFragment extends Fragment implements Constants {
 
     /**
      * Per the design guidelines, you should show the drawer on launch until the user manually
@@ -66,7 +72,7 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
     }
 
     @Override
-    public void onActivityCreated (Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
@@ -74,7 +80,7 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         View DrawerView = inflater.inflate(R.layout.fragment_navigation_drawer, container);
 
@@ -82,44 +88,44 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
     }
 
     private void addListenersToCheckboxes() {
-        showAxesBox = (CheckBox)getActivity().findViewById(R.id.showAxes);
+        showAxesBox = (CheckBox) getActivity().findViewById(R.id.showAxes);
         showAxesBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((CheckBox) v).isChecked()){
+                if (((CheckBox) v).isChecked()) {
                     Toast.makeText(getActivity(), "Show Axes", Toast.LENGTH_LONG).show();
                     setShowAxes(true);
                 } else setShowAxes(false);
             }
         });
 
-        showCurvatureBox = (CheckBox)getActivity().findViewById(R.id.showCurvature);
+        showCurvatureBox = (CheckBox) getActivity().findViewById(R.id.showCurvature);
         showCurvatureBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((CheckBox) v).isChecked()){
+                if (((CheckBox) v).isChecked()) {
                     Toast.makeText(getActivity(), "Show Curvature", Toast.LENGTH_LONG).show();
                     setShowCurvature(true);
                 } else setShowCurvature(false);
             }
         });
 
-        showNormalBox = (CheckBox)getActivity().findViewById(R.id.showNormal);
+        showNormalBox = (CheckBox) getActivity().findViewById(R.id.showNormal);
         showNormalBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((CheckBox) v).isChecked()){
+                if (((CheckBox) v).isChecked()) {
                     Toast.makeText(getActivity(), "Show Normal Vectors", Toast.LENGTH_LONG).show();
                     setShowNormal(true);
                 } else setShowNormal(false);
             }
         });
 
-        setOriginBox = (CheckBox)getActivity().findViewById(R.id.setOrigin);
+        setOriginBox = (CheckBox) getActivity().findViewById(R.id.setOrigin);
         setOriginBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((CheckBox) v).isChecked()){
+                if (((CheckBox) v).isChecked()) {
                     Toast.makeText(getActivity(), "Set Origin to Center of Mass", Toast.LENGTH_LONG).show();
                     setSetOrigin(true);
                 } else {
@@ -262,35 +268,35 @@ public class NavigationDrawerFragment extends Fragment implements Constants{
         void onNavigationDrawerItemSelected(int position);
     }
 
-    private void setShowAxes(boolean isChecked){
+    private void setShowAxes(boolean isChecked) {
         showAxes = isChecked;
     }
 
-    private void setShowCurvature(boolean isChecked){
+    private void setShowCurvature(boolean isChecked) {
         showCurvature = isChecked;
     }
 
-    private void setShowNormal(boolean isChecked){
+    private void setShowNormal(boolean isChecked) {
         showNormal = isChecked;
     }
 
-    public void setSetOrigin(boolean isChecked){
+    public void setSetOrigin(boolean isChecked) {
         setOrigin = isChecked;
     }
 
-    public static boolean getShowAxes(){
+    public static boolean getShowAxes() {
         return showAxes;
     }
 
-    public static boolean getShowCurvature(){
+    public static boolean getShowCurvature() {
         return showCurvature;
     }
 
-    public static boolean getShowNormal(){
+    public static boolean getShowNormal() {
         return showNormal;
     }
 
-    public static boolean getSetOrigin(){
+    public static boolean getSetOrigin() {
         return setOrigin;
     }
 }
