@@ -43,12 +43,6 @@ public class GLES20Renderer extends GLRenderer implements Constants {
     private float radius = 0;
     private float ratio;
 
-    private Context context;
-
-    public GLES20Renderer(Context context) {
-        this.context = context;
-    }
-
     @Override
     public void onCreate(int width, int height, boolean isContextLost) {
         if (isContextLost) {
@@ -60,8 +54,7 @@ public class GLES20Renderer extends GLRenderer implements Constants {
             Matrix.rotateM(mRotationMatrix, 0, DEFAULT_CAMERA_ANGLE_X, 1, 0, 0);
             Matrix.rotateM(mRotationMatrix, 0, DEFAULT_CAMERA_ANGLE_Y, 0, 1, 0);
 
-            DataReader dr = new DataReader(context, "data-curvature.pcd");
-            List<Point> lstPoint = dr.getPoints();
+            List<Point> lstPoint = DataReader.openFile("data-curvature.pcd");
             mPoints = new Points(lstPoint);
             radius = mPoints.getRadius();
         } else {

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.NavigationDrawerFragment;
 import sg.edu.nus.comp.android3dvisualisationtool.app.UI.SliderFragment;
+import sg.edu.nus.comp.android3dvisualisationtool.app.dataReader.DataReader;
 import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20SurfaceView;
 
 
@@ -118,7 +119,9 @@ public class MainActivity extends Activity
     private void initialiseOpenGLESView() {
         if (hasGLES20()) {
             mGLSurfaceView = (GLES20SurfaceView) findViewById(R.id.gl_surface_view);
-            mGLSurfaceView.setContext(getApplicationContext());
+
+            // set the content for dataReader to read the data file later
+            DataReader.setContext(getApplicationContext());
         } else {
             System.out.println("This phone does not support OpenGLES 2.0, quiting...");
             System.exit(1);

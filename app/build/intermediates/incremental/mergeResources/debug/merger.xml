@@ -2,139 +2,139 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res" >
+        <source path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res" >
             <file
                 name="drawer_shadow"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-hdpi/drawer_shadow.9.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-hdpi/drawer_shadow.9.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-hdpi/ic_drawer.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-hdpi/ic_drawer.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-hdpi/ic_launcher.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-hdpi/ic_launcher.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="drawer_shadow"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-mdpi/drawer_shadow.9.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-mdpi/drawer_shadow.9.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-mdpi/ic_drawer.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-mdpi/ic_drawer.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-mdpi/ic_launcher.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-mdpi/ic_launcher.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="drawer_shadow"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-xhdpi/drawer_shadow.9.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-xhdpi/drawer_shadow.9.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-xhdpi/ic_drawer.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-xhdpi/ic_drawer.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-xhdpi/ic_launcher.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-xhdpi/ic_launcher.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="drawer_shadow"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-xxhdpi/drawer_shadow.9.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-xxhdpi/drawer_shadow.9.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-xxhdpi/ic_drawer.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-xxhdpi/ic_drawer.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/drawable-xxhdpi/ic_launcher.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="activity_main"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/layout/activity_main.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/layout/activity_main.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_dialog"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/layout/fragment_dialog.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/layout/fragment_dialog.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_main"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/layout/fragment_main.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/layout/fragment_main.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_navigation_drawer"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/layout/fragment_navigation_drawer.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/layout/fragment_navigation_drawer.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="global"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/menu/global.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/menu/global.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="main"
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/menu/main.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/menu/main.xml"
                 qualifiers=""
                 type="menu" />
             <file
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/values/dimens.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/values/dimens.xml"
                 qualifiers="" >
                 <dimen name="dialog_height" >420dp
                 </dimen>
-                <dimen name="activity_vertical_margin" >16dp
+                <dimen name="navigation_drawer_width" >200dp
                 </dimen>
                 <dimen name="activity_horizontal_margin" >16dp
                 </dimen>
-                <dimen name="navigation_drawer_width" >200dp
-                </dimen>
                 <dimen name="dialog_width" >320dp
+                </dimen>
+                <dimen name="activity_vertical_margin" >16dp
                 </dimen>
             </file>
             <file
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/values/strings.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/values/strings.xml"
                 qualifiers="" >
-                <string name="action_example" >Example action
-                </string>
-                <string name="hello_blank_fragment" >Hello blank fragment
+                <string name="title_section1" >Show Axes
                 </string>
                 <string name="action_settings" >Settings
-                </string>
-                <string name="app_name" >Visualisation
-                </string>
-                <string name="navigation_drawer_close" >Close navigation drawer
-                </string>
-                <string name="dialog_title" >Control Panel
-                </string>
-                <string name="settings" >Settings
-                </string>
-                <string name="title_section1" >Show Axes
                 </string>
                 <string name="title_section3" >Set Origin To Center
                 </string>
                 <string name="title_section2" >Show Normal Vectors
                 </string>
+                <string name="settings" >Settings
+                </string>
+                <string name="hello_blank_fragment" >Hello blank fragment
+                </string>
+                <string name="action_example" >Example action
+                </string>
+                <string name="navigation_drawer_close" >Close navigation drawer
+                </string>
+                <string name="app_name" >Visualisation
+                </string>
+                <string name="dialog_title" >Control Panel
+                </string>
                 <string name="navigation_drawer_open" >Open navigation drawer
                 </string>
             </file>
             <file
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/values/styles.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/values/styles.xml"
                 qualifiers="" >
 
                 <style
@@ -145,17 +145,17 @@
                 </style>
             </file>
             <file
-                path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/main/res/values-w820dp/dimens.xml"
+                path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/main/res/values-w820dp/dimens.xml"
                 qualifiers="w820dp-v13" >
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
         </source>
-        <source path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/build/generated/res/rs/debug" />
-        <source path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/build/generated/res/generated/debug" />
+        <source path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/build/generated/res/rs/debug" />
+        <source path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/build/generated/res/generated/debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/Users/panlong/Documents/work/Intership/Summer Holiday Year2/Android3DVisualisationTool/app/src/debug/res" />
+        <source path="/Users/a0105734/Desktop/Android3DVisualisationTool/app/src/debug/res" />
     </dataSet>
 
 </merger>

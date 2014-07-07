@@ -13,19 +13,14 @@ import java.util.List;
  * Created by tang on 10/6/14.
  */
 public class DataReader{
-    private List<Point> points = null;
-    private Context context = null;
+    private static List<Point> points = null;
+    private static Context context = null;
 
-    public DataReader(Context context, String filename) {
-        this.context = context;
-        openFile(filename);
+    public static void setContext(Context context) {
+        DataReader.context = context;
     }
 
-    public List<Point> getPoints() {
-        return points;
-    }
-
-    private void openFile(String filename)
+    public static List<Point> openFile(String filename)
     {
         points = new ArrayList<Point>();
         try {
@@ -78,6 +73,8 @@ public class DataReader{
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            return points;
         }
     }
 
