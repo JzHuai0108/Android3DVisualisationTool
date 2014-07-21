@@ -12,6 +12,9 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 
 /**
  * Created by tang on 10/6/14.
+ * class dataReader
+ * read data from pcd file and return the points data
+ */
  */
 public class DataReader {
     private static List<Point> points = null;
@@ -21,6 +24,9 @@ public class DataReader {
         DataReader.context = context;
     }
 
+    /**
+     * open file and read the points 
+     */
     public static List<Point> openFile(String filename) {
         points = new ArrayList<Point>();
         try {

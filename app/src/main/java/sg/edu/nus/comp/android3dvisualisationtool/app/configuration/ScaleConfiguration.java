@@ -7,18 +7,32 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
 
 /**
  * Created by panlong on 11/6/14.
+ * class ScaleConfiguration
+ * Calculate configurations like scale factor, radius, canter of mass, etc, based on the 
+ * points given
+ */
  */
 public class ScaleConfiguration implements Constants {
     private final double cameraDistance = DEFAULT_CAMERA_DISTANCE;
     private final double fieldOfView = DEFAULT_FIELD_OF_VIEW;
 
     private List<Point> pointsList = null;
+
+    // masAbsCoor is the actual coordinates shown on the screen
+    // by default, x, y, z are all from -10 to 10
     private double maxAbsCoor = 0;
+
+    // how much the points coordinates should be scaled to be displayed properly
     private double scaleFactor = 0;
     private double radius = 0;
     private double[] centerOfMass = new double[3];
     private double[] movedCenterOfMass = new double[3];
 
+    /**
+     * constructor 
+     * @param pointsList    the points to be visualised 
+     * @param maxAbsCoor    the max coordinates of the visualisation tool (default -10 to 10)
+     */
     public ScaleConfiguration(List<Point> pointsList, double maxAbsCoor) {
         this.pointsList = pointsList;
         Collections.sort(this.pointsList);
@@ -74,6 +88,12 @@ public class ScaleConfiguration implements Constants {
         return this.radius;
     }
 
+    /**
+     * This method is approximated in 3 dimensions.
+     * @param start start index of point
+     * @param end end index of point
+     * @return minimum distance of any two points from index start to end
+     */
     private double calculateMinDis(int start, int end) {
         if (start >= end)
             return 0;

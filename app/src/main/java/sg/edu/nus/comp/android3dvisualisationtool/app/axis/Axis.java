@@ -10,6 +10,7 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support.GLES20Re
 
 /**
  * Created by panlong on 17/6/14.
+ * use cuboid to draw axis
  */
 public class Axis {
 
@@ -35,6 +36,7 @@ public class Axis {
 
     // number of coordinates per vertex in this array
     private static final int COORDS_PER_VERTEX = 3;
+
     private static final int vertexCount = 6 * 3 * 2;
     private static final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
     private float[] pointCoords = new float[108];
@@ -51,6 +53,9 @@ public class Axis {
         setUp();
     }
 
+    /**
+     * generate coordinates array for cuboid
+     */
     private void generateCoordsArray() {
         float x = mLength / 2;
         float y = mWidth / 2;

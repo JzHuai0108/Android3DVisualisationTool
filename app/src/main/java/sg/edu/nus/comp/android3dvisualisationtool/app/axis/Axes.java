@@ -12,6 +12,9 @@ public class Axes implements Constants {
 
     private static float mLength, mWidth;
 
+    /**
+     * only reinitiate axes if it has been changed
+     */
     public static void draw(float[] mvpMatrix, float length, float width) {
         if (xAxis == null || mLength != length || mWidth != width) {
             xAxis = new Axis(length, width, width, new float[]{1f, 0f, 0f, 1f});

@@ -180,6 +180,9 @@ public class GLES20Renderer extends GLRenderer implements Constants {
 
     }
 
+    /**
+     * fix the possible errors in rotation matrix
+     */
     private void fixRotationMatrix() {
         mRotationMatrix[3] = mRotationMatrix[7] = mRotationMatrix[11] = mRotationMatrix[12] = mRotationMatrix[13] = mRotationMatrix[14] = 0.0f;
         mRotationMatrix[15] = 1.0f;

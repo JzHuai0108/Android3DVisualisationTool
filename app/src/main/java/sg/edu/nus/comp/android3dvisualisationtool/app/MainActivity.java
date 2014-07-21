@@ -28,6 +28,7 @@ public class MainActivity extends Activity
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private SliderFragment mDialog_fragment = new SliderFragment();
+    
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */

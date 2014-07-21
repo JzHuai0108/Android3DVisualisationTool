@@ -2,6 +2,8 @@ package sg.edu.nus.comp.android3dvisualisationtool.app.configuration;
 
 /**
  * Created by panlong on 11/6/14.
+ * interface Constants
+ * Global constants used in Visualisation tool
  */
 public interface Constants {
 
