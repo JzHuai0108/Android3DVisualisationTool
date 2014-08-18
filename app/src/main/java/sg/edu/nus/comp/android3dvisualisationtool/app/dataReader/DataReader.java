@@ -15,7 +15,6 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
  * class dataReader
  * read data from pcd file and return the points data
  */
- */
 public class DataReader {
     private static List<Point> points = null;
     private static Context context = null;

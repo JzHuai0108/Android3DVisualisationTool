@@ -11,7 +11,6 @@ import sg.edu.nus.comp.android3dvisualisationtool.app.points.Point;
  * Calculate configurations like scale factor, radius, canter of mass, etc, based on the 
  * points given
  */
- */
 public class ScaleConfiguration implements Constants {
     private final double cameraDistance = DEFAULT_CAMERA_DISTANCE;
     private final double fieldOfView = DEFAULT_FIELD_OF_VIEW;
