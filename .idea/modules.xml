@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Android3DVisualisationTool.iml" filepath="$PROJECT_DIR$/Android3DVisualisationTool.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Android3DVisualisationTool.app.unitTest.iml" />
     </modules>
   </component>
 </project>
-

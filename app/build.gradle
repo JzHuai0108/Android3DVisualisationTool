@@ -1,25 +1,25 @@
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 33
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
-        packageName "sg.edu.nus.comp.android3dvisualisationtool.app"
+        applicationId "sg.edu.nus.comp.android3dvisualisationtool.app"
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:19.+'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:support-v4:22.0.0'
 }
