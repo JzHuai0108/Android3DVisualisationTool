@@ -9,7 +9,7 @@ import android.content.pm.ConfigurationInfo;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;

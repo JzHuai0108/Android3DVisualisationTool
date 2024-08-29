@@ -2,7 +2,7 @@ package sg.edu.nus.comp.android3dvisualisationtool.app.openGLES20Support;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.support.v4.view.MotionEventCompat;
+import androidx.core.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
